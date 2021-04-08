@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<div id="mainContainer">
+			<p:panel id="panelPrueba">
+				<h:form id="mainForm">
+
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Nom usuari"/>
+						<p:inputText id="inpUsuNom"	value="#{usuarioBean.usuario.usuari}" />
+						
+						<p:outputLabel value="Contrasenya"/>
+						<p:inputText id="inpUsuCon"	value="#{usuarioBean.usuario.password}" />
+						
+						<p:outputLabel for="@next" value="Rol" />
+	                	<p:selectOneMenu id="selRol" value="#{usuarioBean.usuario.rol}">
+	                    	<f:selectItems value="#{usuarioBean.rols}" var="varRol" itemValue="#{varRol}" itemLabel="#{varRol}"  />
+		                </p:selectOneMenu>
+		                
+		                <p:outputLabel for="@next" value="Idioma"/>
+	                	<p:selectOneMenu id="selIdioma" value="#{usuarioBean.usuario.idiomaDefecte}">
+	                    	<f:selectItems value="#{usuarioBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma}"  />
+		                </p:selectOneMenu>						
+					
+						<p:outputLabel value="" />
+						<p:commandButton actionListener="#{usuarioBean.guardarUsuario}" value="Desa" update="panelPrueba"/>
+						
+					</p:panelGrid>
+					
+					<br/>
+					
+ 					<p:dataTable var="usuari" value="#{usuarioBean.usuaris}">
+ 						<p:column headerText="usuari">
+ 							<h:outputText value="#{usuari.usuari}" />
+ 						</p:column>
+ 						
+ 						<p:column headerText="password">
+ 							<h:outputText value="#{usuari.password}" />
+ 						</p:column>
+ 						
+ 						<p:column headerText="rol">
+ 							<h:outputText value="#{usuari.rol}" />
+ 						</p:column>
+ 						
+ 						<p:column headerText="idiomaDefecte">
+ 							<h:outputText value="#{usuari.idiomaDefecte}" />
+ 						</p:column>
+ 						
+ 						<p:column>
+ 							<p:commandButton actionListener="#{usuarioBean.cargarModificacionUsuario}" value="Editar" update="panelPrueba">
+ 								<f:setPropertyActionListener value="#{usuari}" target="#{usuarioBean.usuario}" />
+ 							</p:commandButton>
+ 						</p:column>
+ 					</p:dataTable>
+ 
+ 
+				</h:form>
+			</p:panel>
+		</div>
+	</ui:define>
+
+</ui:composition>
