@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import com.jrosselloj.enums.IdiomaEnum;
 import com.jrosselloj.enums.RolEnum;
@@ -21,6 +22,9 @@ public class Usuario {
 	
 	@Enumerated(EnumType.STRING)
 	private IdiomaEnum idiomaDefecte;
+	
+	@OneToOne(mappedBy = "usuariConsulta")
+	Persona persona;
 	
 	public String getUsuari() {
 		return usuari;
@@ -56,8 +60,12 @@ public class Usuario {
 		this.idiomaDefecte = idiomaDefecte;
 	}
 	
+	public Persona getPersona() {
+		return persona;
+	}
 	
-	
-	
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
 	
 }

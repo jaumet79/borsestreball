@@ -10,6 +10,4 @@ public interface IUsuarioService {
 	
 	List<Usuario> findAll();
 	
-	Usuario findByUsuari(String usuari);
-	
 }

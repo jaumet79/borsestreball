@@ -25,11 +25,4 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return usuarioRepo.findAll();
 	}
 	
-	@Override
-	public Usuario findByUsuari(String usuari) {
-		return usuarioRepo.findByUsuari(usuari);
-	}
-	
-	
-	
 }
