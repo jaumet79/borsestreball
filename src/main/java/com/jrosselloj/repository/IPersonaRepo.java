@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jrosselloj.model.Persona;
 
-public interface IPersonaRepo extends JpaRepository<Persona, Integer> {
+public interface IPersonaRepo extends JpaRepository<Persona, String> {
 	
 	Persona findByDni(String dni);
 	

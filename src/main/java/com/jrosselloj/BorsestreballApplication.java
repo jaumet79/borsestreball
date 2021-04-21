@@ -28,6 +28,7 @@ public class BorsestreballApplication {
 		ServletRegistrationBean registration = new ServletRegistrationBean<>(new FacesServlet(), "*.xhtml");
 		registration.setLoadOnStartup(1);
 		//		registration.addUrlMappings("*.jrj");
+		registration.addUrlMappings("/index.xhtml");
 		return registration;
 	}
 	
@@ -39,6 +40,7 @@ public class BorsestreballApplication {
 			//servletContext.setInitParameter("primefaces.THEME", "sunny");
 			//servletContext.setInitParameter("primefaces.THEME", "redmond");
 			
+			//			servletContext.setInitParameter("javax.faces.FACELETS_LIBRARIES", "/WEB-INF/springsecurity.taglib.xml");
 		};
 	}
 	

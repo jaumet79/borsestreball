@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <table width="100%" height="100%" xmlns:h="http://java.sun.com/jsf/html"
                                   xmlns:p="http://primefaces.org/ui"
-                                  xmlns:f="http://java.sun.com/jsf/core">
+                                  xmlns:f="http://java.sun.com/jsf/core"
+                                  xmlns:sec="http://www.springframework.org/security/tags">
     <tr>
         <td>
         	<h:form>
@@ -13,13 +14,26 @@
         		
         		<p:linkButton outcome="index" value="Inici" style="margin-right:20px;" />
 
+				<p:linkButton value="Nova borsa" outcome="bolsa" style="margin-right:20px;" icon="pi pi-star" />
+
         		<p:linkButton value="Gestió usuaris" outcome="usuaris" style="margin-right:20px;" icon="pi pi-star" />
         		
         		<p:linkButton value="Gestió persones" outcome="personas" style="margin-right:20px;" icon="pi pi-star" />
         		
         		<h:outputText value="#{msg['menu.title']}"/>
         		
-
+        		<p:selectOneMenu id="selIdioma" value="#{languageBean.idiomaSelected}" valueChangeListener="#{languageBean.countryLocaleCodeChanged}" onchange="submit()">
+	                   <f:selectItems value="#{languageBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma}"  />
+		           </p:selectOneMenu>	
+		    	&nbsp;&nbsp;       
+		        <h:outputText value="#{languageBean.userName}" />&nbsp;&nbsp;
+		        <h:outputText value="#{languageBean.userRoles}" />&nbsp;&nbsp;
+				<h:outputLink value="${pageContext.request.contextPath}/logout">logout</h:outputLink>
+	
+				<h:outputText value="SÓLO SE VERÁ SI ES ADMIN" rendered="#{languageBean.admin}"/> 
+				<h:outputText value="SÓLO SE VERÁ SI ES EDITOR" rendered="#{languageBean.editor}"/>
+				<h:outputText value="SÓLO SE VERÁ SI ES CONSULTOR" rendered="#{languageBean.consultor}"/>
+  
         	</h:form>
         
         
