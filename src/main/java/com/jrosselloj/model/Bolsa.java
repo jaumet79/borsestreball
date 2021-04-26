@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -28,6 +30,14 @@ public class Bolsa {
 	
 	@OneToMany(mappedBy = "bolsa", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Criterio> criterios;
+	
+	@ManyToOne
+	@JoinColumn(name = "categoria", referencedColumnName = "id", nullable = false)
+	private Categoria categoria;
+	
+	@ManyToOne
+	@JoinColumn(name = "usuariCreador", referencedColumnName = "usuari", nullable = false)
+	private Usuario usuariCreador;
 	
 	public Integer getId() {
 		return id;
@@ -87,5 +97,20 @@ public class Bolsa {
 		return criterios;
 	}
 	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
+	public Usuario getUsuariCreador() {
+		return usuariCreador;
+	}
+	
+	public void setUsuariCreador(Usuario usuariCreador) {
+		this.usuariCreador = usuariCreador;
+	}
 	
 }

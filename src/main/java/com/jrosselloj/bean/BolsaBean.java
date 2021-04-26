@@ -15,8 +15,10 @@ import org.springframework.util.StringUtils;
 
 import com.jrosselloj.enums.TipoCriterio;
 import com.jrosselloj.model.Bolsa;
+import com.jrosselloj.model.Categoria;
 import com.jrosselloj.model.Criterio;
 import com.jrosselloj.service.IBolsaService;
+import com.jrosselloj.service.ICategoriaService;
 
 @Component
 @Scope("view")
@@ -25,13 +27,23 @@ public class BolsaBean {
 	@Autowired
 	private IBolsaService bolsaService;
 	
+	@Autowired
+	private ICategoriaService categoriaService;
+	
+	private LanguageBean languageBean;
+	
 	private List<Bolsa> bolsas;
 	
 	private Bolsa bolsa = new Bolsa();
-	//	private List<Criterio> criterios = new ArrayList<>();
+	
+	private List<Categoria> categorias;
 	
 	@PostConstruct
 	public void init() {
+		
+		languageBean = (LanguageBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("languageBean");
+		
+		categorias = categoriaService.findAll();
 		
 		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -84,7 +96,8 @@ public class BolsaBean {
 	}
 	
 	public void saveBolsa() {
-		bolsaService.saveBolsa(bolsa);
+		bolsaService.saveBolsa(bolsa, languageBean.getUsuario());
+		
 	}
 	
 	
@@ -98,14 +111,12 @@ public class BolsaBean {
 	}
 	
 	
-	//	public List<Criterio> getCriterios() {
-	//		return criterios;
-	//	}
-	//	
-	//	
-	//	public void setCriterios(List<Criterio> criterios) {
-	//		this.criterios = criterios;
-	//	}
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+	
+	
+	
 	
 	
 }

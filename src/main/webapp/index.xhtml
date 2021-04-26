@@ -19,6 +19,10 @@
 						<h:outputText value="#{bolsa.descripcio}" />
 					</p:column>
 					
+					<p:column headerText="Categoria">
+						<h:outputText value="#{bolsa.categoria.descripcion}" />
+					</p:column>
+					
 					<p:column headerText="Data publicació">
 						<h:outputText value="#{bolsa.dataPublicacio}" >
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />

@@ -5,24 +5,32 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.jrosselloj.enums.IdiomaEnum;
 import com.jrosselloj.enums.RolEnum;
+import com.jrosselloj.model.Usuario;
+import com.jrosselloj.service.IUsuarioService;
 
 @Component
-@SessionScoped
+@Scope("session")
 public class LanguageBean {
 	
 	private List<IdiomaEnum> idiomas = new ArrayList<>(Arrays.asList(IdiomaEnum.values()));
 	
 	private IdiomaEnum idiomaSelected;
+	
+	private Usuario usuario;
+	
+	@Autowired
+	IUsuarioService usuarioService;
 	
 	@PostConstruct
 	public void init() {
@@ -41,6 +49,14 @@ public class LanguageBean {
 	public String getUserName() {
 		return SecurityContextHolder.getContext().getAuthentication().getName();
 		
+	}
+	
+	public Usuario getUsuario() {
+		if (usuario == null) {
+			usuario = usuarioService.findById(getUserName());
+		}
+		
+		return usuario;
 	}
 	
 	public String getUserRoles() {

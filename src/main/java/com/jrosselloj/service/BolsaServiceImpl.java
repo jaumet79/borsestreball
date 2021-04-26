@@ -1,5 +1,6 @@
 package com.jrosselloj.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jrosselloj.model.Bolsa;
+import com.jrosselloj.model.Usuario;
 import com.jrosselloj.repository.IBolsaRepo;
 
 @Service
@@ -23,7 +25,13 @@ public class BolsaServiceImpl implements IBolsaService {
 	
 	
 	@Override
-	public void saveBolsa(Bolsa bolsa) {
+	public void saveBolsa(Bolsa bolsa, Usuario usuarioCreador) {
+		
+		if (bolsa.getId() == null) {
+			bolsa.setDataSistema(new Date());
+			bolsa.setUsuariCreador(usuarioCreador);
+		}
+		
 		bolsaRepo.save(bolsa);
 		
 	}

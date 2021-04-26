@@ -1,9 +1,12 @@
 package com.jrosselloj.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.jrosselloj.enums.IdiomaEnum;
@@ -24,7 +27,10 @@ public class Usuario {
 	private IdiomaEnum idiomaDefecte;
 	
 	@OneToOne(mappedBy = "usuariConsulta")
-	Persona persona;
+	private Persona persona;
+	
+	@OneToMany(mappedBy = "usuariCreador")
+	private List<Bolsa> bolsasCreadas;
 	
 	public String getUsuari() {
 		return usuari;
@@ -66,6 +72,11 @@ public class Usuario {
 	
 	public void setPersona(Persona persona) {
 		this.persona = persona;
+	}
+	
+	
+	public List<Bolsa> getBolsasCreadas() {
+		return bolsasCreadas;
 	}
 	
 }
