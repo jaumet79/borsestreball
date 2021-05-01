@@ -1,6 +1,8 @@
 package com.jrosselloj.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,6 +19,7 @@ public class Criterio {
 	
 	private String descripcio;
 	
+	@Enumerated(EnumType.STRING)
 	private TipoCriterio tipo;
 	
 	private Integer puntosPorUnidad;
@@ -26,6 +29,8 @@ public class Criterio {
 	@ManyToOne
 	@JoinColumn(name = "bolsa", referencedColumnName = "id", nullable = false)
 	private Bolsa bolsa;
+	
+	
 	
 	public Integer getId() {
 		return id;
@@ -81,5 +86,7 @@ public class Criterio {
 	public void setPuntuacionMaxima(Integer puntuacionMaxima) {
 		this.puntuacionMaxima = puntuacionMaxima;
 	}
+	
+	
 	
 }

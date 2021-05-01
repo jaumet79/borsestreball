@@ -10,4 +10,6 @@ public interface IPersonaService {
 	
 	List<Persona> findAll();
 	
+	Persona findByDni(String dni);
+	
 }

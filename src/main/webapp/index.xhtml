@@ -10,11 +10,35 @@
                 xmlns:sec="http://www.springframework.org/security/tags" >
 
 	<ui:define name="content">
+	
+	<!-- TOOLBAR -->
+	<h:form id="frmToolbar">
+		<div >
+			<p:growl id="messages" />
+			
+			<p:toolbar>
+				<p:toolbarGroup>
+	            	<p:commandButton action="bolsa" value="Nova borsa" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
+	            </p:toolbarGroup>
+    	    </p:toolbar>
+		
+		</div>
+	</h:form>
+	
+	<br/>
+	<h:outputText value="Gestió borses" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<br/>	
+	
+	
+	
 		<div id="mainContainer">
 		
 			<h:form>
 			
-				<p:dataTable var="bolsa" value="#{bolsaBean.bolsas}">
+				<p:dataTable var="bolsa" value="#{bolsaBean.bolsas}" style="padding:15px;">
+				
+					<f:facet name="header">Borses</f:facet>
+				
 					<p:column headerText="Descripció">
 						<h:outputText value="#{bolsa.descripcio}" />
 					</p:column>
@@ -36,9 +60,15 @@
 					</p:column>
 					
 					<p:column> 
- 						<h:commandButton action="bolsa" value="Editar" >
+ 						<p:commandButton action="bolsa" value="Editar" ajax="false" >
  							<f:param name="bolsaId" value="#{bolsa.id}" />
- 						</h:commandButton>
+ 						</p:commandButton>
+ 					</p:column>
+ 						
+ 					<p:column> 
+ 						<p:commandButton action="seleccion" value="Inscripciones" ajax="false" >
+ 							<f:param name="bolsaId" value="#{bolsa.id}" />
+ 						</p:commandButton>
  					</p:column>
  						
 				</p:dataTable>

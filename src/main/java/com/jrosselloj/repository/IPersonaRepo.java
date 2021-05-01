@@ -6,6 +6,4 @@ import com.jrosselloj.model.Persona;
 
 public interface IPersonaRepo extends JpaRepository<Persona, String> {
 	
-	Persona findByDni(String dni);
-	
 }

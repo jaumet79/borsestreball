@@ -43,7 +43,7 @@
 					
 					<br/>
 					
-					 <p:dataTable id="dtCriteris" widgetVar="dtCriteris" var="criterio" value="#{bolsaBean.bolsa.criterios}" editable="true">
+					 <p:dataTable id="dtCriteris" widgetVar="dtCriteris" var="criterio" value="#{bolsaBean.bolsa.criterios}" editable="true" >
 			            <f:facet name="header">Criteris</f:facet>
 
 			            <p:ajax event="rowEdit" listener="#{bolsaBean.onRowEdit}" update=":mainForm:msgs"/>
@@ -82,7 +82,6 @@
 			                </p:cellEditor>
 			            </p:column>
 
-
 			            <p:column style="width:6rem">
 			                <p:rowEditor/>
 			            </p:column>
@@ -109,7 +108,7 @@
 					<br/>
 					
 					<p:outputLabel value="" />
-					<p:commandButton actionListener="#{bolsaBean.saveBolsa}" value="Desa" update="panelPrueba"/>
+					<p:commandButton actionListener="#{bolsaBean.saveBolsa}" value="Desa" update="panelPrueba" action="index" ajax="false"/>
 					<p:outputLabel value="" />
 				</h:form>
 

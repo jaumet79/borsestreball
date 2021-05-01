@@ -12,24 +12,22 @@
         	
         		<p:growl id="messages" />
         		
-        		<p:linkButton outcome="index" value="Inici" style="margin-right:20px;" />
-
-				<p:linkButton value="Nova borsa" outcome="bolsa" style="margin-right:20px;" icon="pi pi-star" />
-
-        		<p:linkButton value="Gestió usuaris" outcome="usuaris" style="margin-right:20px;" icon="pi pi-star" />
+        		<p:commandButton action="index" value="Gestió borses" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
         		
-        		<p:linkButton value="Gestió persones" outcome="personas" style="margin-right:20px;" icon="pi pi-star" />
+        		<p:commandButton action="usuaris" value="Gestió usuaris" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
         		
-        		<p:linkButton value="Gestió categories" outcome="categorias" style="margin-right:20px;" icon="pi pi-star" />
+        		<p:commandButton action="personas" value="Gestió persones" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
+        		
+        		<p:commandButton action="categorias" value="Gestió categories" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
         		
         		<h:outputText value="#{msg['menu.title']}"/>
-        		
+        		&nbsp;&nbsp;
         		<p:selectOneMenu id="selIdioma" value="#{languageBean.idiomaSelected}" valueChangeListener="#{languageBean.countryLocaleCodeChanged}" onchange="submit()">
 	                   <f:selectItems value="#{languageBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma}"  />
 		           </p:selectOneMenu>	
 		    	&nbsp;&nbsp;       
-		        <h:outputText value="#{languageBean.userName}" />&nbsp;&nbsp;
-		        <h:outputText value="#{languageBean.userRoles}" />&nbsp;&nbsp;
+		        Usuari: <h:outputText value="#{languageBean.userName}" />&nbsp;&nbsp;
+		        Rol: <h:outputText value="#{languageBean.userRoles}" />&nbsp;&nbsp;
 				<h:outputLink value="${pageContext.request.contextPath}/logout">logout</h:outputLink>
 	
 				<h:outputText value="SÓLO SE VERÁ SI ES ADMIN" rendered="#{languageBean.admin}"/> 

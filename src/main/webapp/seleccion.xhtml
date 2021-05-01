@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+	
+	
+	
+	<!-- TOOLBAR -->
+	<h:form id="frmSeleccion">
+		<div >
+			<p:growl id="messages" />
+			
+			<p:toolbar>
+            	<p:toolbarGroup>
+              	  <p:commandButton value="Afegir sol·licitud" icon="pi pi-plus" actionListener="#{seleccionBean.openNew}"
+                                 update=":frmDialog:manage-product-content" oncomplete="PF('manageProductDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                    <p:resetInput target=":frmDialog:manage-product-content"/>
+	              	  </p:commandButton>
+	            </p:toolbarGroup>
+           
+    	    </p:toolbar>
+		
+		</div>
+	</h:form>
+	
+	<br/>
+	<h:outputText value="Gestió candidats | #{seleccionBean.bolsa.descripcio}" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<br/>
+	
+	<!-- TAULA CANDIDATS -->
+	<div id="mainContainer">
+		
+		<h:form id="frmLista">
+		
+			<p:dataTable var="seleccion" value="#{seleccionBean.bolsa.listaSeleccion}" style="padding:15px;">
+				
+				<f:facet name="header">Candidats</f:facet>
+				
+				<p:column headerText="DNI">
+					<h:outputText value="#{seleccion.persona.dni}" />
+				</p:column>
+				
+				<p:column headerText="nom complet">
+					<h:outputText value="#{seleccion.persona.nomComplet}" />
+				</p:column>
+				
+				<p:column headerText="telefon">
+					<h:outputText value="#{seleccion.persona.telefon}" />
+				</p:column>
+				
+				<p:column headerText="puntuacionTotal">
+					<h:outputText value="#{seleccion.puntuacionTotal}" />
+				</p:column>
+				
+				<p:column headerText="estat">
+					<h:outputText value="#{seleccion.estat}" />
+				</p:column>
+				
+				<p:column headerText="motiuExclusio">
+					<h:outputText value="#{seleccion.motiuExclusio}" />
+				</p:column>
+				
+				<p:column>
+					<p:commandButton action="#{seleccionBean.cargarMeritosBySeleccion}" value="Mèrits" update=":frmMeritos" oncomplete="PF('wvMerits').show()">
+						<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
+					</p:commandButton>
+				</p:column>
+				
+				<p:column>
+					<p:commandButton value="Excloure" update=":frmExclusion" oncomplete="PF('wvExclusion').show()">
+						<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
+					</p:commandButton>
+				</p:column>
+						
+			</p:dataTable>
+			
+		</h:form>
+		
+	</div>
+		
+		
+	<!-- DIALOG CERCAR PERSONA -->
+	<p:dialog header="Cercar persona" showEffect="fade" modal="true" widgetVar="manageProductDialog" appendTo="@(body)">
+		<h:form id="frmDialog">
+                  
+            <p:outputPanel id="manage-product-content" class="ui-fluid">
+            
+            	<p:panelGrid columns="3" >
+						<p:outputLabel value="Document"/>
+						<p:inputText id="inpDocument" value="#{seleccionBean.dni}" 
+							required="true" requiredMessage="Document obligatori" />
+						<p:message for="inpDocument"/>
+						
+						<p:outputLabel value="" />
+						<p:commandButton action="#{seleccionBean.buscarPersonaPorDni}" value="Cerca" 
+							update="manage-product-content :frmSeleccion:messages" />
+						<p:outputLabel value="" />
+				</p:panelGrid>
+				
+				<br/>
+				
+				<p:panelGrid rendered="#{seleccionBean.personaBusqueda != null}" columns="2">
+					<h:outputText value="Nom" />
+					<h:outputText value="#{seleccionBean.personaBusqueda.nomComplet}" />
+					
+					<h:outputText value="" />
+					<p:commandButton action="#{seleccionBean.addPersonaToBolsa}" value="Afegir a borsa" 
+							update=":frmSeleccion :frmLista" onclick="PF('manageProductDialog').hide()" />
+						
+				</p:panelGrid>
+            
+			</p:outputPanel>
+		</h:form>
+	</p:dialog>
+		
+		
+	<!-- DIALOG MERITS -->
+	<p:dialog header="Mèrits" showEffect="fade" modal="true"
+                 widgetVar="wvMerits" appendTo="@(body)" width="75%">
+			
+		<h:form id="frmMeritos">
+		
+			<p:dataTable var="merito" value="#{seleccionBean.meritos}"
+				editable="true" >
+				
+				<p:column headerText="Tipus" groupRow="true">
+					<h:outputText value="#{merito.criterio.tipo.descripcion}" />
+				</p:column>
+			
+				<p:column headerText="descripcio">
+					<h:outputText value="#{merito.criterio.descripcio}" />
+				</p:column>
+				
+				<p:column headerText="Punts per unitat">
+					<h:outputText value="#{merito.criterio.puntosPorUnidad}" />
+				</p:column>
+				
+				<p:column headerText="Puntuació Màxima">
+					<h:outputText value="#{merito.criterio.puntuacionMaxima}" />
+				</p:column>
+						
+				<p:column headerText="Unitats">
+					<p:cellEditor>
+						<f:facet name="output"><h:outputText value="#{merito.unidades}" /></f:facet>
+						<f:facet name="input"><h:inputText value="#{merito.unidades}" /></f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column>
+					<p:rowEditor/>
+				</p:column>
+					
+			</p:dataTable>
+			
+		</h:form>
+      
+      	<p:commandButton value="guarda mèrits" action="#{seleccionBean.guardarMeritosToSeleccion}" 
+      		oncomplete="PF('wvMerits').hide()" update=":frmLista"/>
+      
+	</p:dialog>
+		
+
+
+
+	<!-- DIALOG EXCLUSION -->
+	<p:dialog header="Excluir persona" showEffect="fade" modal="true" widgetVar="wvExclusion" appendTo="@(body)">
+		<h:form id="frmExclusion">
+                  
+            <p:outputPanel id="manage-product-content" class="ui-fluid" rendered="#{seleccionBean.seleccion != null}">
+            
+            	<p:panelGrid columns="3" >
+						<p:outputLabel value="Motiu exclusio"/>
+						<p:selectOneMenu id="selMotivo" value="#{seleccionBean.seleccion.motiuExclusio}">
+	                    	<f:selectItems value="#{seleccionBean.listaMotivosExclusion}" var="varMotivo" itemValue="#{varMotivo}" itemLabel="#{varMotivo}" />
+		                </p:selectOneMenu>	
+						<p:message for="selMotivo"/>
+						
+						<p:outputLabel value="" />
+						<p:commandButton action="#{seleccionBean.excluirSeleccion}" value="Excloure" 
+							update=":frmLista" oncomplete="PF('wvExclusion').hide()"/>
+						<p:outputLabel value="" />
+				</p:panelGrid>
+				
+			</p:outputPanel>
+		</h:form>
+	</p:dialog>		
+		
+		
+		
+		
+	</ui:define>
+
+</ui:composition>

@@ -13,6 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.OrderBy;
+
 @Entity
 public class Bolsa {
 	
@@ -29,7 +33,8 @@ public class Bolsa {
 	private Date dataSistema;
 	
 	@OneToMany(mappedBy = "bolsa", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	List<Criterio> criterios;
+	@OrderBy(clause = "tipo ASC")
+	private List<Criterio> criterios;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoria", referencedColumnName = "id", nullable = false)
@@ -38,6 +43,12 @@ public class Bolsa {
 	@ManyToOne
 	@JoinColumn(name = "usuariCreador", referencedColumnName = "usuari", nullable = false)
 	private Usuario usuariCreador;
+	
+	@OneToMany(mappedBy = "bolsa")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OrderBy(clause = "puntuacionTotal DESC")
+	private List<Seleccion> listaSeleccion;
+	
 	
 	public Integer getId() {
 		return id;
@@ -112,5 +123,13 @@ public class Bolsa {
 	public void setUsuariCreador(Usuario usuariCreador) {
 		this.usuariCreador = usuariCreador;
 	}
+	
+	
+	
+	public List<Seleccion> getListaSeleccion() {
+		return listaSeleccion;
+	}
+	
+	
 	
 }
