@@ -10,7 +10,9 @@
 
 	<ui:define name="content">
 	
-	
+	<br/>
+	<h:outputText value="Gestió candidats &nbsp;&nbsp;|&nbsp;&nbsp; #{seleccionBean.bolsa.descripcio} &nbsp;&nbsp;|&nbsp;&nbsp; #{seleccionBean.bolsa.categoria.descripcion}" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<br/><br/>
 	
 	<!-- TOOLBAR -->
 	<h:form id="frmSeleccion">
@@ -31,60 +33,67 @@
 		</div>
 	</h:form>
 	
-	<br/>
-	<h:outputText value="Gestió candidats | #{seleccionBean.bolsa.descripcio}" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
-	<br/>
+
 	
 	<!-- TAULA CANDIDATS -->
-	<div id="mainContainer">
-		
-		<h:form id="frmLista">
-		
-			<p:dataTable var="seleccion" value="#{seleccionBean.bolsa.listaSeleccion}" style="padding:15px;">
-				
-				<f:facet name="header">Candidats</f:facet>
-				
-				<p:column headerText="DNI">
-					<h:outputText value="#{seleccion.persona.dni}" />
-				</p:column>
-				
-				<p:column headerText="nom complet">
-					<h:outputText value="#{seleccion.persona.nomComplet}" />
-				</p:column>
-				
-				<p:column headerText="telefon">
-					<h:outputText value="#{seleccion.persona.telefon}" />
-				</p:column>
-				
-				<p:column headerText="puntuacionTotal">
-					<h:outputText value="#{seleccion.puntuacionTotal}" />
-				</p:column>
-				
-				<p:column headerText="estat">
-					<h:outputText value="#{seleccion.estat}" />
-				</p:column>
-				
-				<p:column headerText="motiuExclusio">
-					<h:outputText value="#{seleccion.motiuExclusio}" />
-				</p:column>
-				
-				<p:column>
-					<p:commandButton action="#{seleccionBean.cargarMeritosBySeleccion}" value="Mèrits" update=":frmMeritos" oncomplete="PF('wvMerits').show()">
-						<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
-					</p:commandButton>
-				</p:column>
-				
-				<p:column>
-					<p:commandButton value="Excloure" update=":frmExclusion" oncomplete="PF('wvExclusion').show()">
-						<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
-					</p:commandButton>
-				</p:column>
-						
-			</p:dataTable>
+	<h:form id="frmLista">
+	
+		<p:dataTable var="seleccion" value="#{seleccionBean.bolsa.listaSeleccion}" style="padding:15px;">
 			
-		</h:form>
+			<f:facet name="header">Candidats</f:facet>
+			
+			<p:column headerText="DNI">
+				<h:outputText value="#{seleccion.persona.dni}" />
+			</p:column>
+			
+			<p:column headerText="nom complet">
+				<h:outputText value="#{seleccion.persona.nomComplet}" />
+			</p:column>
+			
+			<p:column headerText="telefon">
+				<h:outputText value="#{seleccion.persona.telefon}" />
+			</p:column>
+			
+			<p:column headerText="puntuacionTotal">
+				<h:outputText value="#{seleccion.puntuacionTotal}" />
+			</p:column>
+			
+			<p:column headerText="estat">
+				<h:outputText value="#{seleccion.estat}" />
+			</p:column>
+			
+			<p:column headerText="motiuExclusio">
+				<h:outputText value="#{seleccion.motiuExclusio}" />
+			</p:column>
+			
+			<p:column>
+				<p:commandButton action="#{seleccionBean.cargarMeritosBySeleccion}" value="Mèrits" update=":frmMeritos" 
+					oncomplete="PF('wvMerits').show()" rendered="#{seleccion.estat == 'ADMES'}">
+					<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
+				</p:commandButton>
+			</p:column>
+			
+			<p:column>
+				<p:commandButton value="Excloure" update=":frmExclusion" oncomplete="PF('wvExclusion').show()"
+					rendered="#{seleccion.estat == 'ADMES'}">
+					<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
+				</p:commandButton>
+				
+				<p:commandButton value="Incloure" update=":frmLista" rendered="#{seleccion.estat == 'EXCLOS'}" action="#{seleccionBean.incluirSeleccion}">
+					<p:confirm header="Incloure" message="Està segur que ho vol tonar a incluir?" icon="pi pi-info-circle" />
+					<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
+				</p:commandButton>
+				
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+           			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+           			<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+       			</p:confirmDialog>
+			</p:column>
+					
+		</p:dataTable>
 		
-	</div>
+	</h:form>
+		
 		
 		
 	<!-- DIALOG CERCAR PERSONA -->

@@ -167,10 +167,23 @@ public class BolsaServiceImpl implements IBolsaService {
 	
 	
 	@Override
-	public void saveSeleccion(Seleccion seleccion) {
+	public void excluirDeSeleccion(Seleccion seleccion) {
+		seleccion.setEstat(EstatSeleccio.EXCLOS);
+		seleccion.setPuntuacionTotal(0);
 		seleccionRepo.save(seleccion);
 		
 	}
 	
+	@Override
+	public void anularExclusionEnSeleccion(Seleccion seleccion) {
+		seleccion.setEstat(EstatSeleccio.ADMES);
+		seleccion.setMotiuExclusio(null);
+		
+		List<Merito> meritos = obtenerMeritosBySeleccion(seleccion);
+		seleccion.setPuntuacionTotal(calcularPuntuacionPorMeritos(meritos));
+		
+		seleccionRepo.save(seleccion);
+		
+	}
 	
 }

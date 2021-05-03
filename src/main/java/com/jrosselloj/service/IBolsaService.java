@@ -24,6 +24,8 @@ public interface IBolsaService {
 	
 	void saveMeritosToSeleccion(List<Merito> meritos);
 	
-	void saveSeleccion(Seleccion seleccion);
+	void excluirDeSeleccion(Seleccion seleccion);
+	
+	void anularExclusionEnSeleccion(Seleccion seleccion);
 	
 }

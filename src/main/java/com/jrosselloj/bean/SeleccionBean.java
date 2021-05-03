@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.jrosselloj.enums.EstatSeleccio;
 import com.jrosselloj.enums.MotiuExclusio;
 import com.jrosselloj.model.Bolsa;
 import com.jrosselloj.model.Merito;
@@ -98,12 +97,17 @@ public class SeleccionBean extends GlobalBean {
 	}
 	
 	public void excluirSeleccion() {
-		seleccion.setEstat(EstatSeleccio.EXCLOS);
-		seleccion.setPuntuacionTotal(0);
-		bolsaService.saveSeleccion(seleccion);
-		
+		bolsaService.excluirDeSeleccion(seleccion);
 		cargarBolsa();
+		
 	}
+	
+	public void incluirSeleccion() {
+		bolsaService.anularExclusionEnSeleccion(seleccion);
+		cargarBolsa();
+		
+	}
+	
 	
 	public Bolsa getBolsa() {
 		return bolsa;
