@@ -23,7 +23,7 @@ public class CategoriaServiceImpl implements ICategoriaService {
 	
 	@Override
 	public List<Categoria> findAll() {
-		return categoriaRepo.findAll();
+		return categoriaRepo.findAllByOrderByDescripcionAsc();
 	}
 	
 	@Override

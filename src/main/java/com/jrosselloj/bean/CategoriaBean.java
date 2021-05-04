@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import com.jrosselloj.model.Categoria;
@@ -13,7 +14,7 @@ import com.jrosselloj.service.ICategoriaService;
 
 @Component
 @Scope("view")
-public class CategoriaBean {
+public class CategoriaBean extends BaseBean {
 	
 	@Autowired
 	private ICategoriaService categoriaService;
@@ -43,6 +44,8 @@ public class CategoriaBean {
 		categoriaService.registrar(categoria);
 		categoria = new Categoria();
 		cargaCategorias();
+		
+		showInfo("Categoria guardada correctament");
 	}
 	
 	public void cargarModificacionCategoria() {
@@ -54,9 +57,20 @@ public class CategoriaBean {
 	}
 	
 	public void eliminarCategoria() {
-		categoriaService.eliminar(categoria);
-		categoria = new Categoria();
-		cargaCategorias();
+		try {
+			categoriaService.eliminar(categoria);
+			categoria = new Categoria();
+			cargaCategorias();
+			
+			showInfo("Categoria eliminada correctament");
+			
+		} catch (DataIntegrityViolationException e) {
+			showError("No s'ha pogut eliminar degut a que hi ha alguna borsa amb aquesta categoria");
+			
+		}
+		
+		
+		
 	}
 	
 }

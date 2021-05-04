@@ -2,6 +2,7 @@ package com.jrosselloj.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,8 +17,10 @@ import com.jrosselloj.enums.RolEnum;
 public class Usuario {
 	
 	@Id
+	@Column(length = 30)
 	private String usuari;
 	
+	@Column(length = 100)
 	private String password;
 	
 	@Enumerated(EnumType.STRING)

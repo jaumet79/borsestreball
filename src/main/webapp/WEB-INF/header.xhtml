@@ -12,6 +12,7 @@
         	
         		<p:growl id="messages" />
         		
+        		<!-- MENU CABECERA -->
         		<p:commandButton action="index" value="Gestió borses" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
         		
         		<p:commandButton action="usuaris" value="Gestió usuaris" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
@@ -20,16 +21,24 @@
         		
         		<p:commandButton action="categorias" value="Gestió categories" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
         		
+        		<!-- TITULO -->
         		<h:outputText value="#{msg['menu.title']}"/>
         		&nbsp;&nbsp;
+        		
+        		<!-- CANVI IDIOMA -->
         		<p:selectOneMenu id="selIdioma" value="#{languageBean.idiomaSelected}" valueChangeListener="#{languageBean.countryLocaleCodeChanged}" onchange="submit()">
-	                   <f:selectItems value="#{languageBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma}"  />
+	                   <f:selectItems value="#{languageBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma.descripcion}"  />
 		           </p:selectOneMenu>	
-		    	&nbsp;&nbsp;       
+		    	&nbsp;&nbsp;      
+		    	
+		    	<!-- INFO USUARI --> 
 		        Usuari: <h:outputText value="#{languageBean.userName}" />&nbsp;&nbsp;
 		        Rol: <h:outputText value="#{languageBean.userRoles}" />&nbsp;&nbsp;
+		        
+		        <!-- LOGOUT -->
 				<h:outputLink value="${pageContext.request.contextPath}/logout">logout</h:outputLink>
 	
+				<!-- PROVES -->
 				<h:outputText value="SÓLO SE VERÁ SI ES ADMIN" rendered="#{languageBean.admin}"/> 
 				<h:outputText value="SÓLO SE VERÁ SI ES EDITOR" rendered="#{languageBean.editor}"/>
 				<h:outputText value="SÓLO SE VERÁ SI ES CONSULTOR" rendered="#{languageBean.consultor}"/>

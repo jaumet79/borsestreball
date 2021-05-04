@@ -22,7 +22,7 @@ import com.jrosselloj.service.ICategoriaService;
 
 @Component
 @Scope("view")
-public class BolsaBean extends GlobalBean {
+public class BolsaBean extends BaseBean {
 	
 	@Autowired
 	private IBolsaService bolsaService;

@@ -6,48 +6,66 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<ui:define name="content">
-		<div id="mainContainer">
-			<p:panel id="panelPrueba">
-				<h:form id="mainForm">
+	
+	<br/>
+	<h:outputText value="Gestió categories laborals" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<br/><br/>
+	
+	<h:form id="mainForm">
 
-					<p:panelGrid columns="3" >
-						<p:outputLabel value="Descripció"/>
-						<p:inputText id="inpDocument" value="#{categoriaBean.categoria.descripcion}" 
-							required="true" requiredMessage="Document obligatori" />
-						<p:message for="inpDocument"/>
-						
-						<p:outputLabel value="" />
-						<p:commandButton actionListener="#{categoriaBean.guardarCategoria}" value="Desa" update="panelPrueba"/>
-						<p:outputLabel value="" />
-						
-					</p:panelGrid>
-					</h:form>
-					<br/>
-					
- <h:form>
- 					<p:dataTable var="categoria" value="#{categoriaBean.categorias}">
- 						<p:column headerText="Categoria">
- 							<h:outputText value="#{categoria.descripcion}" />
- 						</p:column>
- 						
- 						<p:column>
- 							<p:commandButton actionListener="#{categoriaBean.cargarModificacionCategoria}" value="Editar" update="panelPrueba">
- 								<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoria}" />
- 							</p:commandButton>
- 							
- 							<p:commandButton action="#{categoriaBean.eliminarCategoria}" value="Eliminar" update="panelPrueba">
- 								<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoria}" />
- 							</p:commandButton>
- 						</p:column>
- 					</p:dataTable>
-
- 
-				</h:form>
-			</p:panel>
+		<!-- FORMULARI CATEGORIES -->
+		<div style="padding:15px;">
+			<p:panelGrid columns="3" >
+				<p:outputLabel value="Descripció"/>
+				<p:inputText id="inpDocument" value="#{categoriaBean.categoria.descripcion}" 
+					required="true" requiredMessage="Descripció obligatori" maxlength="50" />
+				<p:message for="inpDocument"/>
+				
+				<p:commandButton action="categorias" value="Neteja" ajax="false" immediate="true"/>
+				<p:commandButton actionListener="#{categoriaBean.guardarCategoria}" value="Desa" update="mainForm frmCategorias :frmHeader:messages"/>
+				<p:outputLabel value="" />
+			</p:panelGrid>
 		</div>
+	</h:form>
+					
+	<br/>
+	
+	<!-- TAULA CATEGORIES -->		
+	<h:form id="frmCategorias">
+		<p:dataTable var="categoria" value="#{categoriaBean.categorias}" style="padding:15px;"
+			emptyMessage="No s'han trobat categories">
+			
+			<f:facet name="header">Categories</f:facet>
+			
+			<p:column headerText="Categoria">
+				<h:outputText value="#{categoria.descripcion}" />
+			</p:column>
+			
+			<p:column>
+				<p:commandButton action="#{categoriaBean.cargarModificacionCategoria}" value="Editar" update=":mainForm :frmCategorias">
+					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoria}" />
+				</p:commandButton>
+				
+				<p:commandButton action="#{categoriaBean.eliminarCategoria}" value="Eliminar" update=":mainForm :frmCategorias :frmHeader:messages">
+					<p:confirm header="Eliminar" message="Està segur que vol eliminar la categoria?" icon="pi pi-info-circle" />
+					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoria}" />
+				</p:commandButton>
+				
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+           			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+           			<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+       			</p:confirmDialog>
+			</p:column>
+			
+			<f:facet name="footer">Total: #{fn:length(categoriaBean.categorias)} categories</f:facet>
+			
+		</p:dataTable>
+	</h:form>
+
 	</ui:define>
 
 </ui:composition>

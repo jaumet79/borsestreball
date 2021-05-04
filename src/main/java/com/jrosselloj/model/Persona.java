@@ -2,6 +2,7 @@ package com.jrosselloj.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,16 +16,21 @@ import com.jrosselloj.enums.IdiomaEnum;
 public class Persona {
 	
 	@Id
+	@Column(length = 9)
 	private String dni;
 	
+	@Column(length = 30)
 	private String nom;
 	
+	@Column(length = 30)
 	private String cognom1;
 	
+	@Column(length = 30)
 	private String cognom2;
 	
 	private Date dataNaixament;
 	
+	@Column(length = 9)
 	private String telefon;
 	
 	@Enumerated(EnumType.STRING)

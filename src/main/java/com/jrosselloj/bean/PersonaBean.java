@@ -16,7 +16,7 @@ import com.jrosselloj.service.IPersonaService;
 
 @Component
 @Scope("view")
-public class PersonaBean {
+public class PersonaBean extends BaseBean {
 	
 	@Autowired
 	private IPersonaService personaService;
@@ -48,6 +48,8 @@ public class PersonaBean {
 		personaService.registrar(persona);
 		persona = new Persona();
 		carregaPersones();
+		
+		showInfo("Persona guardada correctament");
 	}
 	
 	public void cargarModificacionPersona() {

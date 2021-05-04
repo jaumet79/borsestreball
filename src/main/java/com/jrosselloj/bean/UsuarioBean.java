@@ -17,7 +17,7 @@ import com.jrosselloj.service.IUsuarioService;
 
 @Component
 @Scope("view")
-public class UsuarioBean {
+public class UsuarioBean extends BaseBean {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
@@ -50,6 +50,8 @@ public class UsuarioBean {
 		usuarioService.registrar(usuario);
 		usuario = new Usuario();
 		carregaUsuaris();
+		
+		showInfo("Usuari guardat correctament");
 	}
 	
 	public void cargarModificacionUsuario() {

@@ -19,25 +19,25 @@
 		<!-- FORMULARI BORSA -->
 		<div style="padding:15px;">
 			<p:panelGrid columns="3" >
-				<p:outputLabel value="Descripció"/>
+				<p:outputLabel value="Descripció"  style="font-variant:small-caps;"/>
 				<p:inputText id="inpDesc" value="#{bolsaBean.bolsa.descripcio}" 
 					required="true" requiredMessage="Descripció obligatoria" />
 				<p:message for="inpDesc"/>
 				
-				<p:outputLabel value="Data publicació"/>
+				<p:outputLabel value="Data publicació"  style="font-variant:small-caps;"/>
 				<p:calendar id="calPublicacio" value="#{bolsaBean.bolsa.dataPublicacio}" 
 					pattern="dd/MM/yyyy" mask="true" navigator="true" popUpIconOnly="true" 
 					required="true" requiredMessage="Data publicació obligatoria" />
 				<p:message for="calPublicacio" />
 				
-				<p:outputLabel value="Data inici"/>
+				<p:outputLabel value="Data inici"  style="font-variant:small-caps;"/>
 				<p:calendar id="calInici" value="#{bolsaBean.bolsa.dataInici}" 
 					pattern="dd/MM/yyyy" mask="true" navigator="true" popUpIconOnly="true" 
 					required="true" requiredMessage="Data inici obligatoria" />
 				<p:message for="calInici" />
 				
-				<p:outputLabel for="@next" value="Categoria laboral" />
-	              	<p:selectOneMenu id="selCategoria" value="#{bolsaBean.bolsa.categoria}" converter="#{categoriaConverter}">
+				<p:outputLabel for="@next" value="Categoria laboral"  style="font-variant:small-caps;"/>
+	              	<p:selectOneMenu id="selCategoria" value="#{bolsaBean.bolsa.categoria}" converter="#{categoriaConverter}"  style="font-variant:small-caps;">
 	                  	<f:selectItems value="#{bolsaBean.categorias}" var="varCategoria" itemValue="#{varCategoria}" itemLabel="#{varCategoria.descripcion}"  />
 	               </p:selectOneMenu>
 	               <p:message for="selCategoria" />

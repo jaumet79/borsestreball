@@ -6,88 +6,106 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<ui:define name="content">
-		<div id="mainContainer">
-			<p:panel id="panelPrueba">
-				<h:form id="mainForm">
+	
+	<br/>
+	<h:outputText value="Gestió persones" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<br/><br/>
+	
+	<h:form id="mainForm">
 
-					<p:panelGrid columns="3" >
-						<p:outputLabel value="Document"/>
-						<p:inputText id="inpDocument" value="#{personaBean.persona.dni}" 
-							required="true" requiredMessage="Document obligatori" />
-						<p:message for="inpDocument"/>
-						
-						<p:outputLabel value="Nom"/>
-						<p:inputText id="inpNom" value="#{personaBean.persona.nom}" 
-							required="true" requiredMessage="Nom obligatori"/>
-						<p:message for="inpNom"/>
-						
-						<p:outputLabel value="Primer cognom"/>
-						<p:inputText id="inpCognom1" value="#{personaBean.persona.cognom1}" 
-							required="true" requiredMessage="Primer cognom obligatori"/>
-						<p:message for="inpCognom1"/>
-						
-						<p:outputLabel value="Segon cognom"/>
-						<p:inputText id="inpCognom2" value="#{personaBean.persona.cognom2}" />
-						<p:message for="inpCognom2"/>
-						
-						<p:outputLabel value="Data naixament"/>
-						<p:calendar id="calNaixament" value="#{personaBean.persona.dataNaixament}" 
-							pattern="dd/MM/yyyy" mask="true" navigator="true" maxdate="today" popUpIconOnly="true" 
-							required="true" requiredMessage="Data naixament obligatoria" />
-						<p:message for="calNaixament" />
-						
-						<p:outputLabel value="Telefon"/>
-						<p:inputText id="inpTelf" value="#{personaBean.persona.telefon}" />
-						<p:message for="inpTelf"/>
-
-		                <p:outputLabel for="@next" value="Idioma"/>
-	                	<p:selectOneMenu id="selIdioma" value="#{personaBean.persona.idioma}">
-	                    	<f:selectItems value="#{personaBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma}"  />
-		                </p:selectOneMenu>						
-						<p:message for="selIdioma"/>
-					
-						<p:outputLabel value="" />
-						<p:commandButton actionListener="#{personaBean.guardarPersona}" value="Desa" update="panelPrueba"/>
-						<p:outputLabel value="" />
-						
-					</p:panelGrid>
-					</h:form>
-					<br/>
-					
- <h:form>
- 					<p:dataTable var="persona" value="#{personaBean.persones}">
- 						<p:column headerText="Document">
- 							<h:outputText value="#{persona.dni}" />
- 						</p:column>
- 						
- 						<p:column headerText="Nom complet">
- 							<h:outputText value="#{persona.nomComplet}" />
- 						</p:column>
- 						
- 						<p:column headerText="Data naixament">
- 							<h:outputText value="#{persona.dataNaixament}" >
- 								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-							</h:outputText>
- 						</p:column>
- 						
- 						<p:column headerText="Idioma">
- 							<h:outputText value="#{persona.idioma}" />
- 						</p:column>
- 						
- 						<p:column>
- 							<p:commandButton actionListener="#{personaBean.cargarModificacionPersona}" value="Editar" update="panelPrueba">
- 								<f:setPropertyActionListener value="#{persona}" target="#{personaBean.persona}" />
- 							</p:commandButton>
- 						</p:column>
- 					</p:dataTable>
-
- 
-				</h:form>
-			</p:panel>
+		<!-- FORMULARI PERSONES -->
+		<div style="padding:15px;">
+			<p:panelGrid columns="3" >
+				<p:outputLabel value="Document"/>
+				<p:inputText id="inpDocument" value="#{personaBean.persona.dni}" 
+					required="true" requiredMessage="Document obligatori" maxlength="9" 
+					disabled="#{personaBean.persona.dni != null}"/>
+				<p:message for="inpDocument"/>
+				
+				<p:outputLabel value="Nom"/>
+				<p:inputText id="inpNom" value="#{personaBean.persona.nom}" 
+					required="true" requiredMessage="Nom obligatori" maxlength="30" />
+				<p:message for="inpNom"/>
+				
+				<p:outputLabel value="Primer cognom"/>
+				<p:inputText id="inpCognom1" value="#{personaBean.persona.cognom1}" 
+					required="true" requiredMessage="Primer cognom obligatori" maxlength="30" />
+				<p:message for="inpCognom1"/>
+				
+				<p:outputLabel value="Segon cognom"/>
+				<p:inputText id="inpCognom2" value="#{personaBean.persona.cognom2}" maxlength="30" />
+				<p:message for="inpCognom2"/>
+				
+				<p:outputLabel value="Data naixament"/>
+				<p:calendar id="calNaixament" value="#{personaBean.persona.dataNaixament}" 
+					pattern="dd/MM/yyyy" mask="true" navigator="true" maxdate="today" popUpIconOnly="true" 
+					required="true" requiredMessage="Data naixament obligatoria" />
+				<p:message for="calNaixament" />
+				
+				<p:outputLabel value="Telefon"/>
+				<p:inputText id="inpTelf" value="#{personaBean.persona.telefon}" maxlength="9"/>
+				<p:message for="inpTelf"/>
+	
+	            <p:outputLabel for="@next" value="Idioma"/>
+	            <p:selectOneMenu id="selIdioma" value="#{personaBean.persona.idioma}">
+	            	<f:selectItems value="#{personaBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma.descripcion}"  />
+	            </p:selectOneMenu>						
+				<p:message for="selIdioma"/>
+			
+				<p:commandButton action="personas" value="Neteja" ajax="false" immediate="true"/>
+				<p:commandButton actionListener="#{personaBean.guardarPersona}" value="Desa" 
+					update=":mainForm :frmPersonas :frmHeader:messages"
+					oncomplete="PF('tblPersona').filter()"/>
+				<p:outputLabel value="" />
+				
+			</p:panelGrid>
 		</div>
+		
+	</h:form>
+	
+	<br/>
+
+	<!-- TAULA PERSONES -->		
+	<h:form id="frmPersonas">
+		<p:dataTable var="persona" value="#{personaBean.persones}" style="padding:15px;" 
+			widgetVar="tblPersona" emptyMessage="No s'han trobat persones" >
+			
+			<f:facet name="header">Persones</f:facet>
+			
+			<p:column headerText="Document" sortBy="#{persona.dni}" filterBy="#{persona.dni}" filterMatchMode="contains">
+				<h:outputText value="#{persona.dni}" />
+			</p:column>
+			
+			<p:column headerText="Nom complet" sortBy="#{persona.nomComplet}" filterBy="#{persona.nomComplet}" filterMatchMode="contains">
+				<h:outputText value="#{persona.nomComplet}" />
+			</p:column>
+			
+			<p:column headerText="Data naixament" sortBy="#{persona.dataNaixament}">
+				<h:outputText value="#{persona.dataNaixament}" >
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="Idioma">
+				<h:outputText value="#{persona.idioma.descripcion}" />
+			</p:column>
+			
+			<p:column>
+				<p:commandButton actionListener="#{personaBean.cargarModificacionPersona}" value="Editar" update="mainForm">
+					<f:setPropertyActionListener value="#{persona}" target="#{personaBean.persona}" />
+				</p:commandButton>
+			</p:column>
+			
+			<f:facet name="footer">Total: #{fn:length(personaBean.persones)} persones</f:facet>
+		</p:dataTable>
+
+
+	</h:form>
+
 	</ui:define>
 
 </ui:composition>
