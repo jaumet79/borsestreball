@@ -3,25 +3,28 @@ package com.jrosselloj.bean;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
+import com.jrosselloj.MyUserDetails;
 import com.jrosselloj.enums.IdiomaEnum;
 import com.jrosselloj.enums.RolEnum;
 import com.jrosselloj.model.Usuario;
 import com.jrosselloj.service.IUsuarioService;
 
 @Component
-@Scope("session")
-public class LanguageBean {
+//@Scope("session")
+@SessionScope
+public class SessionBean {
 	
 	private List<IdiomaEnum> idiomas = new ArrayList<>(Arrays.asList(IdiomaEnum.values()));
 	
@@ -29,21 +32,23 @@ public class LanguageBean {
 	
 	private Usuario usuario;
 	
+	private Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+	
 	@Autowired
 	IUsuarioService usuarioService;
 	
 	@PostConstruct
 	public void init() {
-		//idiomaSelected = IdiomaEnum.getIdiomaEnumByLocale(FacesContext.getCurrentInstance().getViewRoot().getLocale());
+		locale = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getLocale();
+		idiomaSelected = IdiomaEnum.getIdiomaEnumByLocale(locale);
+		
 	}
 	
 	//value change event listener
 	public void countryLocaleCodeChanged(ValueChangeEvent e) {
-		
 		idiomaSelected = (IdiomaEnum)e.getNewValue();
-		
+		locale = idiomaSelected.getLocale();
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(idiomaSelected.getLocale());
-		
 	}
 	
 	public String getUserName() {
@@ -61,11 +66,11 @@ public class LanguageBean {
 	
 	public String getUserRoles() {
 		String roles = "";
-		for (GrantedAuthority ggg : SecurityContextHolder.getContext().getAuthentication().getAuthorities()) {
+		for (GrantedAuthority gAuthority : SecurityContextHolder.getContext().getAuthentication().getAuthorities()) {
 			if (roles != "") {
 				roles += ", ";
 			}
-			roles += ggg.getAuthority();
+			roles += gAuthority.getAuthority();
 			
 		}
 		
@@ -78,9 +83,10 @@ public class LanguageBean {
 		boolean hadRole = false;
 		
 		if (rol != null) {
-			String rolString = "ROLE_" + rol.toString();
+			String rolString = rol.toString();
+			String rolStringSpring = "ROLE_" + rol.toString();
 			for (GrantedAuthority gAuth : SecurityContextHolder.getContext().getAuthentication().getAuthorities()) {
-				if (rolString.equalsIgnoreCase(gAuth.getAuthority())) {
+				if (rolString.equalsIgnoreCase(gAuth.getAuthority()) || rolStringSpring.equalsIgnoreCase(gAuth.getAuthority())) {
 					hadRole = true;
 				}
 			}
@@ -127,5 +133,19 @@ public class LanguageBean {
 	public void setIdiomaSelected(IdiomaEnum idiomaSelected) {
 		this.idiomaSelected = idiomaSelected;
 	}
+	
+	
+	
+	public Locale getLocale() {
+		return locale;
+	}
+	
+	
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+	
+	
+	
 	
 }

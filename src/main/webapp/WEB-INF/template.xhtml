@@ -13,22 +13,13 @@
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
             <title>Borses Treball</title>
         </f:facet>
-        <p:layout id="layoutSismos" fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
-        
-        	<!-- CAPÇALERA -->
-            <p:layoutUnit position="north" size="68" id="north" >
-                <ui:include src="header.xhtml" />
-            </p:layoutUnit>
-
-			<!-- CONTINGUT PRINCIPAL -->
-            <p:layoutUnit styleClass="layoutUnitCenter" position="center"
-                          style="font-size: 14px;">
-                <!-- <h:form id="mainForm">  -->
-                    <ui:insert name="content" />
-                <!-- </h:form> -->
-            </p:layoutUnit>
-
-            
-        </p:layout>
     </h:head>
+    
+    <h:body>
+		<ui:include src="header.xhtml" />
+		
+		<p:layoutUnit styleClass="layoutUnitCenter" position="center" style="font-size: 14px;border:0px;">
+			<ui:insert name="content" />
+		</p:layoutUnit>
+    </h:body>
 </html>

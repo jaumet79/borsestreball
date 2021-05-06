@@ -13,11 +13,13 @@ import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.sun.faces.config.ConfigureListener;
 
 @SpringBootApplication
-public class BorsestreballApplication {
+public class BorsestreballApplication implements WebMvcConfigurer {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BorsestreballApplication.class, args);
@@ -63,5 +65,36 @@ public class BorsestreballApplication {
 		configurer.setScopes(mapScopes);
 		return configurer;
 	}
+	
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("forward:/index.xhtml");
+		//registry.addViewController("/login").setViewName("forward:/index.jsp");
+		//registry.addViewController("/qmgr/**").setViewName("forward:/index.jsp");
+	}
+	
+	
+	
+	
+	
+	//	@Bean
+	//	public LocaleResolver localeResolver() {
+	//		SessionLocaleResolver slr = new SessionLocaleResolver();
+	//		//slr.setDefaultLocale(Locale.US);
+	//		slr.setDefaultLocale(new Locale("ca", "ES"));
+	//		return slr;
+	//	}
+	//	
+	//	@Bean
+	//	public LocaleChangeInterceptor localeChangeInterceptor() {
+	//		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+	//		lci.setParamName("lang");
+	//		return lci;
+	//	}
+	//	
+	//	@Override
+	//	public void addInterceptors(InterceptorRegistry registry) {
+	//		registry.addInterceptor(localeChangeInterceptor());
+	//	}
 	
 }

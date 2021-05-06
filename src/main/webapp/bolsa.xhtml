@@ -11,7 +11,7 @@
 	<ui:define name="content">
 
 	<br/>
-	<h:outputText value="Gestió borsa" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<h:outputText value="#{msg['bolsa.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
 	<br/><br/>
 
 	<h:form id="mainForm">
@@ -19,25 +19,25 @@
 		<!-- FORMULARI BORSA -->
 		<div style="padding:15px;">
 			<p:panelGrid columns="3" >
-				<p:outputLabel value="Descripció"  style="font-variant:small-caps;"/>
+				<p:outputLabel value="#{msg['bolsas.descripcion']}" />
 				<p:inputText id="inpDesc" value="#{bolsaBean.bolsa.descripcio}" 
-					required="true" requiredMessage="Descripció obligatoria" />
+					required="true" requiredMessage="#{msg['bolsas.descripcion.obligatoria']}" />
 				<p:message for="inpDesc"/>
 				
-				<p:outputLabel value="Data publicació"  style="font-variant:small-caps;"/>
+				<p:outputLabel value="#{msg['bolsas.fecha.publicacion']}" />
 				<p:calendar id="calPublicacio" value="#{bolsaBean.bolsa.dataPublicacio}" 
 					pattern="dd/MM/yyyy" mask="true" navigator="true" popUpIconOnly="true" 
-					required="true" requiredMessage="Data publicació obligatoria" />
+					required="true" requiredMessage="#{msg['bolsas.fecha.publicacion.obligatoria']}" />
 				<p:message for="calPublicacio" />
 				
-				<p:outputLabel value="Data inici"  style="font-variant:small-caps;"/>
+				<p:outputLabel value="#{msg['bolsas.fecha.inicio']}" />
 				<p:calendar id="calInici" value="#{bolsaBean.bolsa.dataInici}" 
 					pattern="dd/MM/yyyy" mask="true" navigator="true" popUpIconOnly="true" 
-					required="true" requiredMessage="Data inici obligatoria" />
+					required="true" requiredMessage="#{msg['bolsas.fecha.inicio.obligatoria']}" />
 				<p:message for="calInici" />
 				
-				<p:outputLabel for="@next" value="Categoria laboral"  style="font-variant:small-caps;"/>
-	              	<p:selectOneMenu id="selCategoria" value="#{bolsaBean.bolsa.categoria}" converter="#{categoriaConverter}"  style="font-variant:small-caps;">
+				<p:outputLabel for="@next" value="#{msg['bolsas.categoria']}" />
+	              	<p:selectOneMenu id="selCategoria" value="#{bolsaBean.bolsa.categoria}" converter="#{categoriaConverter}" >
 	                  	<f:selectItems value="#{bolsaBean.categorias}" var="varCategoria" itemValue="#{varCategoria}" itemLabel="#{varCategoria.descripcion}"  />
 	               </p:selectOneMenu>
 	               <p:message for="selCategoria" />
@@ -61,20 +61,20 @@
 
 		<!-- CRITERIS -->		
 		<p:dataTable id="dtCriteris" widgetVar="dtCriteris" var="criterio" value="#{bolsaBean.bolsa.criterios}" 
-		 	editable="true" style="padding:15px;" emptyMessage="No s'han trobat criteris">
-            <f:facet name="header">Criteris</f:facet>
+		 	editable="true" style="padding:15px;" emptyMessage="#{msg['bolsas.criterio.vacia']}">
+            <f:facet name="header">#{msg['bolsas.criterio.criterios']}</f:facet>
 
             <p:ajax event="rowEdit" listener="#{bolsaBean.onRowEdit}" update=":frmHeader:messages"/>
             <p:ajax event="rowEditCancel" listener="#{bolsaBean.onRowCancel}" update=":frmHeader:messages"/>
 
-            <p:column headerText="Descripcio">
+            <p:column headerText="#{msg['bolsas.criterio.descripcion']}">
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{criterio.descripcio}"/></f:facet>
                     <f:facet name="input"><p:inputText id="modelInput" value="#{criterio.descripcio}" style="width:100%"/></f:facet>
                 </p:cellEditor>
             </p:column>
 
-            <p:column headerText="Tipus">
+            <p:column headerText="#{msg['bolsas.criterio.tipo']}">
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{criterio.tipo.descripcion}"/></f:facet>
                     <f:facet name="input">
@@ -86,14 +86,14 @@
                 </p:cellEditor>
             </p:column>
 
-            <p:column headerText="Punts per unitat">
+            <p:column headerText="#{msg['bolsas.criterio.punts']}">
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{criterio.puntosPorUnidad}"/></f:facet>
                     <f:facet name="input"><p:inputText value="#{criterio.puntosPorUnidad}" style="width:100%" /></f:facet>
                 </p:cellEditor>
             </p:column>
 
-            <p:column headerText="Puntuació màxima">
+            <p:column headerText="#{msg['bolsas.criterio.maxima']}">
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{criterio.puntuacionMaxima}"/></f:facet>
                     <f:facet name="input"><p:inputText value="#{criterio.puntuacionMaxima}" style="width:100%" /></f:facet>
@@ -116,7 +116,7 @@
 		<div style="padding-left:5px;padding-right:5px">
 			<p:toolbar>
             	<p:toolbarGroup>
-              	  <p:commandButton value="Desa" icon="pi pi-plus" 
+              	  <p:commandButton value="#{msg['guardar']}" icon="pi pi-plus" 
               	  	actionListener="#{bolsaBean.saveBolsa}" action="index"
                                   process="@this" 
                                  styleClass="ui-button-success" style="margin-right: .5rem"

@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bcrypt);
 		
 		auth.inMemoryAuthentication().withUser("user").password(bcrypt.encode("password")).roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("a").password(bcrypt.encode("b")).roles("CONSULTOR");
+		auth.inMemoryAuthentication().withUser("a").password(bcrypt.encode("b")).roles("EDITOR");
 	}
 	
 	@Override
@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		// login
 		http.formLogin().loginPage("/login.xhtml").permitAll().defaultSuccessUrl("/index.xhtml", true);
+		//http.formLogin().loginPage("/login.xhtml").permitAll().successHandler(myAuthenticationSuccessHandler());
 		
 		// logout
 		http.logout().logoutSuccessUrl("/login.xhtml");
@@ -59,4 +60,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	}
 	
+	
+	
+	
+	//	@Bean
+	//	public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+	//		return new MySimpleUrlAuthenticationSuccessHandler();
+	//	}
+	//	
 }

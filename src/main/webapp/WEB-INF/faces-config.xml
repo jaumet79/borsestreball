@@ -7,9 +7,10 @@
 
     <application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
-		
+		 
 		<locale-config>
-			<default-locale>es</default-locale>
+			<default-locale>ca</default-locale>
+			<supported-locale>es</supported-locale>
 		</locale-config>
 		
 		<resource-bundle>

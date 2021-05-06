@@ -30,7 +30,7 @@ public class BolsaBean extends BaseBean {
 	@Autowired
 	private ICategoriaService categoriaService;
 	
-	private LanguageBean languageBean;
+	private SessionBean sessionBean;
 	
 	private List<Bolsa> bolsas;
 	
@@ -41,7 +41,7 @@ public class BolsaBean extends BaseBean {
 	@PostConstruct
 	public void init() {
 		
-		languageBean = (LanguageBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("languageBean");
+		sessionBean = (SessionBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("languageBean");
 		
 		categorias = categoriaService.findAll();
 		
@@ -96,7 +96,7 @@ public class BolsaBean extends BaseBean {
 	}
 	
 	public void saveBolsa() {
-		bolsaService.saveBolsa(bolsa, languageBean.getUsuario());
+		bolsaService.saveBolsa(bolsa, sessionBean.getUsuario());
 		
 	}
 	

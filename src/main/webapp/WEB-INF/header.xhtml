@@ -1,54 +1,56 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<table width="100%" height="100%" xmlns:h="http://java.sun.com/jsf/html"
-                                  xmlns:p="http://primefaces.org/ui"
-                                  xmlns:f="http://java.sun.com/jsf/core"
-                                  xmlns:sec="http://www.springframework.org/security/tags">
-    <tr>
-        <td>
-        	<h:form id="frmHeader">
-        	
-        		<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
-        	
-        		<p:growl id="messages" />
+
+	<h:form id="frmHeader" xmlns:h="http://java.sun.com/jsf/html"
+                           xmlns:p="http://primefaces.org/ui"
+                           xmlns:f="http://java.sun.com/jsf/core"
+                           xmlns:sec="http://www.springframework.org/security/tags">
+      	
+    	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+	 
+    	<f:view locale="#{sessionBean.locale}" />
+    	
+    	<p:growl id="messages" />
+    	
+    	<p:menubar>
+			<p:menuitem value="#{msg['menu.bolsas']}" outcome="index" icon="ui-icon-folder-open" style="margin-right:15px;" />
+			<p:menuitem value="#{msg['menu.usuarios']}" outcome="usuaris" icon="ui-icon-key" style="margin-right:15px;" />
+			<p:menuitem value="#{msg['menu.personas']}" outcome="personas" icon="pi pi-fw pi-user-edit" style="margin-right:15px;" />
+			<p:menuitem value="#{msg['menu.categorias']}" outcome="categorias" icon="ui-icon-note" style="margin-right:15px;" />
+			
+			<f:facet name="options">
+				<div>
+					<div style = "float: left">
+						<!-- TITULO -->
+		        		<h:outputText value="#{msg['menu.title']}" style="padding-right:200px;font-size:25px;font-variant:small-caps;"/>
+		        		
+		        		<!-- CANVI IDIOMA -->
+		        		<p:selectOneMenu id="selIdioma" value="#{sessionBean.idiomaSelected}" valueChangeListener="#{sessionBean.countryLocaleCodeChanged}" 
+		        			onchange="submit()" style="margin-right:50px;">
+							<f:selectItems value="#{sessionBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma.descripcion}"  />
+				        </p:selectOneMenu>	
+				    	
+				    	<!-- INFO USUARI --> 
+				        <h:outputText value="#{sessionBean.userName} (#{sessionBean.userRoles})" style="margin-right:15px;"/>&nbsp;&nbsp;
+			        </div>
+			        
+			        <div style = "float: left">
+						<!-- PROVES -->
+						<h:outputText value="A" rendered="#{sessionBean.admin}"/> 
+						<h:outputText value="E" rendered="#{sessionBean.editor}"/>
+						<h:outputText value="C" rendered="#{sessionBean.consultor}"/>
+					</div>
+				
+		      		<div style = "float: left">
+               			<p:commandButton value="#{msg['header.salir']}" icon="pi pi-fw pi-sign-out" type="button" styleClass="ui-button-info" 
+               				onclick="window.location.href='${pageContext.request.contextPath}/logout';" ajax="false"/>
+              		</div>
+             	</div>
+         	</f:facet>
         		
-        		<!-- MENU CABECERA -->
-        		<p:commandButton action="index" value="Gestió borses" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
-        		
-        		<p:commandButton action="usuaris" value="Gestió usuaris" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
-        		
-        		<p:commandButton action="personas" value="Gestió persones" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
-        		
-        		<p:commandButton action="categorias" value="Gestió categories" ajax="false" styleClass="ui-button-success" style="margin-right: .5rem" icon="pi pi-plus"  />
-        		
-        		<!-- TITULO -->
-        		<h:outputText value="#{msg['menu.title']}"/>
-        		&nbsp;&nbsp;
-        		
-        		<!-- CANVI IDIOMA -->
-        		<p:selectOneMenu id="selIdioma" value="#{languageBean.idiomaSelected}" valueChangeListener="#{languageBean.countryLocaleCodeChanged}" onchange="submit()">
-	                   <f:selectItems value="#{languageBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma.descripcion}"  />
-		           </p:selectOneMenu>	
-		    	&nbsp;&nbsp;      
-		    	
-		    	<!-- INFO USUARI --> 
-		        Usuari: <h:outputText value="#{languageBean.userName}" />&nbsp;&nbsp;
-		        Rol: <h:outputText value="#{languageBean.userRoles}" />&nbsp;&nbsp;
-		        
-		        <!-- LOGOUT -->
-				<h:outputLink value="${pageContext.request.contextPath}/logout">logout</h:outputLink>
-	
-				<!-- PROVES -->
-				<h:outputText value="SÓLO SE VERÁ SI ES ADMIN" rendered="#{languageBean.admin}"/> 
-				<h:outputText value="SÓLO SE VERÁ SI ES EDITOR" rendered="#{languageBean.editor}"/>
-				<h:outputText value="SÓLO SE VERÁ SI ES CONSULTOR" rendered="#{languageBean.consultor}"/>
-  
-        	</h:form>
+		</p:menubar>
+      		
+   	</h:form>
         
         
           	
-          	
-               	
-        </td>
-    </tr>
-</table>
