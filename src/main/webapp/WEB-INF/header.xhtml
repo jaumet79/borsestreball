@@ -13,10 +13,14 @@
     	<p:growl id="messages" />
     	
     	<p:menubar>
-			<p:menuitem value="#{msg['menu.bolsas']}" outcome="index" icon="ui-icon-folder-open" style="margin-right:15px;" />
-			<p:menuitem value="#{msg['menu.usuarios']}" outcome="usuaris" icon="ui-icon-key" style="margin-right:15px;" />
-			<p:menuitem value="#{msg['menu.personas']}" outcome="personas" icon="pi pi-fw pi-user-edit" style="margin-right:15px;" />
-			<p:menuitem value="#{msg['menu.categorias']}" outcome="categorias" icon="ui-icon-note" style="margin-right:15px;" />
+			<p:menuitem value="#{msg['menu.bolsas']}" outcome="index" icon="ui-icon-folder-open" 
+				style="margin-right:15px;" rendered="#{sessionBean.editor}" />
+			<p:menuitem value="#{msg['menu.usuarios']}" outcome="usuaris" icon="ui-icon-key" 
+				style="margin-right:15px;" rendered="#{sessionBean.admin || sessionBean.adminSis}" />
+			<p:menuitem value="#{msg['menu.personas']}" outcome="personas" icon="pi pi-fw pi-user-edit" 
+				style="margin-right:15px;" rendered="#{sessionBean.editor}" />
+			<p:menuitem value="#{msg['menu.categorias']}" outcome="categorias" icon="ui-icon-note" 
+				style="margin-right:15px;" rendered="#{sessionBean.admin}" />
 			
 			<f:facet name="options">
 				<div>
@@ -34,13 +38,6 @@
 				        <h:outputText value="#{sessionBean.userName} (#{sessionBean.userRoles})" style="margin-right:15px;"/>&nbsp;&nbsp;
 			        </div>
 			        
-			        <div style = "float: left">
-						<!-- PROVES -->
-						<h:outputText value="A" rendered="#{sessionBean.admin}"/> 
-						<h:outputText value="E" rendered="#{sessionBean.editor}"/>
-						<h:outputText value="C" rendered="#{sessionBean.consultor}"/>
-					</div>
-				
 		      		<div style = "float: left">
                			<p:commandButton value="#{msg['header.salir']}" icon="pi pi-fw pi-sign-out" type="button" styleClass="ui-button-info" 
                				onclick="window.location.href='${pageContext.request.contextPath}/logout';" ajax="false"/>

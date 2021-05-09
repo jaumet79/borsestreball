@@ -12,52 +12,52 @@
 	<ui:define name="content">
 	
 	<br/>
-	<h:outputText value="Gestió persones" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<h:outputText value="#{msg['candidatos.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;" rendered="#{sessionBean.editor}" />
 	<br/><br/>
 	
-	<h:form id="mainForm">
+	<h:form id="mainForm" rendered="#{sessionBean.editor}" >
 
 		<!-- FORMULARI PERSONES -->
 		<div style="padding:15px;">
 			<p:panelGrid columns="3" >
-				<p:outputLabel value="Document"/>
+				<p:outputLabel value="#{msg['candidatos.documento']}" />
 				<p:inputText id="inpDocument" value="#{personaBean.persona.dni}" 
-					required="true" requiredMessage="Document obligatori" maxlength="9" 
+					required="true" requiredMessage="#{msg['candidatos.documento.obligatorio']}" maxlength="9" 
 					disabled="#{personaBean.persona.dni != null}"/>
 				<p:message for="inpDocument"/>
 				
-				<p:outputLabel value="Nom"/>
+				<p:outputLabel value="#{msg['candidatos.nombre']}"/>
 				<p:inputText id="inpNom" value="#{personaBean.persona.nom}" 
-					required="true" requiredMessage="Nom obligatori" maxlength="30" />
+					required="true" requiredMessage="#{msg['candidatos.nombre.obligatorio']}" maxlength="30" />
 				<p:message for="inpNom"/>
 				
-				<p:outputLabel value="Primer cognom"/>
+				<p:outputLabel value="#{msg['candidatos.primer.apellido']}"/>
 				<p:inputText id="inpCognom1" value="#{personaBean.persona.cognom1}" 
-					required="true" requiredMessage="Primer cognom obligatori" maxlength="30" />
+					required="true" requiredMessage="#{msg['candidatos.primer.apellido.obligatorio']}" maxlength="30" />
 				<p:message for="inpCognom1"/>
 				
-				<p:outputLabel value="Segon cognom"/>
+				<p:outputLabel value="#{msg['candidatos.segundo.apellido']}"/>
 				<p:inputText id="inpCognom2" value="#{personaBean.persona.cognom2}" maxlength="30" />
 				<p:message for="inpCognom2"/>
 				
-				<p:outputLabel value="Data naixament"/>
+				<p:outputLabel value="#{msg['candidatos.fecha.nacimiento']}"/>
 				<p:calendar id="calNaixament" value="#{personaBean.persona.dataNaixament}" 
 					pattern="dd/MM/yyyy" mask="true" navigator="true" maxdate="today" popUpIconOnly="true" 
-					required="true" requiredMessage="Data naixament obligatoria" />
+					required="true" requiredMessage="#{msg['candidatos.fecha.nacimiento.obligatorio']}" />
 				<p:message for="calNaixament" />
 				
-				<p:outputLabel value="Telefon"/>
+				<p:outputLabel value="#{msg['candidatos.telefono']}"/>
 				<p:inputText id="inpTelf" value="#{personaBean.persona.telefon}" maxlength="9"/>
 				<p:message for="inpTelf"/>
 	
-	            <p:outputLabel for="@next" value="Idioma"/>
+	            <p:outputLabel for="@next" value="#{msg['candidatos.Idioma']}"/>
 	            <p:selectOneMenu id="selIdioma" value="#{personaBean.persona.idioma}">
 	            	<f:selectItems value="#{personaBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma.descripcion}"  />
 	            </p:selectOneMenu>						
 				<p:message for="selIdioma"/>
 			
-				<p:commandButton action="personas" value="Neteja" ajax="false" immediate="true"/>
-				<p:commandButton actionListener="#{personaBean.guardarPersona}" value="Desa" 
+				<p:commandButton action="personas" value="#{msg['limpieza']}" ajax="false" immediate="true"/>
+				<p:commandButton actionListener="#{personaBean.guardarPersona}" value="#{msg['guardar']}" 
 					update=":mainForm :frmPersonas :frmHeader:messages"
 					oncomplete="PF('tblPersona').filter()"/>
 				<p:outputLabel value="" />
@@ -70,37 +70,37 @@
 	<br/>
 
 	<!-- TAULA PERSONES -->		
-	<h:form id="frmPersonas">
+	<h:form id="frmPersonas" rendered="#{sessionBean.editor}" >
 		<p:dataTable var="persona" value="#{personaBean.persones}" style="padding:15px;" 
-			widgetVar="tblPersona" emptyMessage="No s'han trobat persones" >
+			widgetVar="tblPersona" emptyMessage="#{msg['candidatos.vacia']}" >
 			
-			<f:facet name="header">Persones</f:facet>
+			<f:facet name="header">#{msg['candidatos.candidatos']}</f:facet>
 			
-			<p:column headerText="Document" sortBy="#{persona.dni}" filterBy="#{persona.dni}" filterMatchMode="contains">
+			<p:column headerText="#{msg['candidatos.documento']}" sortBy="#{persona.dni}" filterBy="#{persona.dni}" filterMatchMode="contains">
 				<h:outputText value="#{persona.dni}" />
 			</p:column>
 			
-			<p:column headerText="Nom complet" sortBy="#{persona.nomComplet}" filterBy="#{persona.nomComplet}" filterMatchMode="contains">
+			<p:column headerText="#{msg['candidatos.nombre.completo']}" sortBy="#{persona.nomComplet}" filterBy="#{persona.nomComplet}" filterMatchMode="contains">
 				<h:outputText value="#{persona.nomComplet}" />
 			</p:column>
 			
-			<p:column headerText="Data naixament" sortBy="#{persona.dataNaixament}">
+			<p:column headerText="#{msg['candidatos.fecha.nacimiento']}" sortBy="#{persona.dataNaixament}">
 				<h:outputText value="#{persona.dataNaixament}" >
 					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 			
-			<p:column headerText="Idioma">
+			<p:column headerText="#{msg['candidatos.Idioma']}">
 				<h:outputText value="#{persona.idioma.descripcion}" />
 			</p:column>
 			
 			<p:column>
-				<p:commandButton actionListener="#{personaBean.cargarModificacionPersona}" value="Editar" update="mainForm">
+				<p:commandButton actionListener="#{personaBean.cargarModificacionPersona}" value="#{msg['editar']}" update="mainForm">
 					<f:setPropertyActionListener value="#{persona}" target="#{personaBean.persona}" />
 				</p:commandButton>
 			</p:column>
 			
-			<f:facet name="footer">Total: #{fn:length(personaBean.persones)} persones</f:facet>
+			<f:facet name="footer">#{msg['total']}: #{fn:length(personaBean.persones)} #{msg['candidatos.candidatos_m']}</f:facet>
 		</p:dataTable>
 
 

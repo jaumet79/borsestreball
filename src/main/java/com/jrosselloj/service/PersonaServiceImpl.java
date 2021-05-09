@@ -1,14 +1,17 @@
 package com.jrosselloj.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jrosselloj.enums.RolEnum;
 import com.jrosselloj.model.Persona;
+import com.jrosselloj.model.Usuario;
 import com.jrosselloj.repository.IPersonaRepo;
-import com.jrosselloj.repository.ISeleccionRepo;
 
 @Service
 public class PersonaServiceImpl implements IPersonaService {
@@ -17,12 +20,27 @@ public class PersonaServiceImpl implements IPersonaService {
 	private IPersonaRepo personaRepo;
 	
 	@Autowired
-	private ISeleccionRepo seleccionRepo;
+	//private IUsuarioRepo usuarioRepo;
+	private IUsuarioService usuarioService;
 	
 	@Override
 	public void registrar(Persona persona) {
-		personaRepo.save(persona);
+		persona = personaRepo.save(persona);
 		
+		// Cream usuari de consulta
+		Usuario usuario = new Usuario();
+		usuario.setUsuari(persona.getDni());
+		usuario.setPassword(formatFecha(persona.getDataNaixament()));
+		usuario.setRol(RolEnum.CONSULTOR);
+		usuario.setIdiomaDefecte(persona.getIdioma());
+		usuario.setPersona(persona);
+		usuarioService.registrar(usuario);
+		
+	}
+	
+	private String formatFecha(Date fecha) {
+		SimpleDateFormat objSDF = new SimpleDateFormat("dd/MM/yyyy");
+		return objSDF.format(fecha);
 	}
 	
 	@Override

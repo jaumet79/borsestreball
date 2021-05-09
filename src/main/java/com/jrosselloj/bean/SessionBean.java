@@ -70,7 +70,10 @@ public class SessionBean {
 			if (roles != "") {
 				roles += ", ";
 			}
-			roles += gAuthority.getAuthority();
+			
+			RolEnum rolEnum = RolEnum.valueOf(gAuthority.getAuthority());
+			
+			roles += rolEnum.getDescripcion();
 			
 		}
 		
@@ -119,11 +122,13 @@ public class SessionBean {
 		return isConsultor;
 	}
 	
+	public boolean isAdminSis() {
+		return hadRole(RolEnum.ADMIN_SIS);
+	}
 	
 	public List<IdiomaEnum> getIdiomas() {
 		return idiomas;
 	}
-	
 	
 	public IdiomaEnum getIdiomaSelected() {
 		return idiomaSelected;
@@ -134,8 +139,6 @@ public class SessionBean {
 		this.idiomaSelected = idiomaSelected;
 	}
 	
-	
-	
 	public Locale getLocale() {
 		return locale;
 	}
@@ -144,8 +147,6 @@ public class SessionBean {
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
-	
-	
 	
 	
 }

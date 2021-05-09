@@ -12,21 +12,21 @@
 	<ui:define name="content">
 	
 	<br/>
-	<h:outputText value="Gestió categories laborals" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<h:outputText value="#{msg['categoria.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;" rendered="#{sessionBean.admin}" />
 	<br/><br/>
 	
-	<h:form id="mainForm">
+	<h:form id="mainForm" rendered="#{sessionBean.admin}" >
 
 		<!-- FORMULARI CATEGORIES -->
 		<div style="padding:15px;">
 			<p:panelGrid columns="3" >
-				<p:outputLabel value="Descripció"/>
+				<p:outputLabel value="#{msg['categoria.descripcion']}"/>
 				<p:inputText id="inpDocument" value="#{categoriaBean.categoria.descripcion}" 
-					required="true" requiredMessage="Descripció obligatori" maxlength="50" />
+					required="true" requiredMessage="#{msg['categoria.descripcion.obligatoria']}" maxlength="50" />
 				<p:message for="inpDocument"/>
 				
-				<p:commandButton action="categorias" value="Neteja" ajax="false" immediate="true"/>
-				<p:commandButton actionListener="#{categoriaBean.guardarCategoria}" value="Desa" update="mainForm frmCategorias :frmHeader:messages"/>
+				<p:commandButton action="categorias" value="#{msg['limpieza']}" ajax="false" immediate="true"/>
+				<p:commandButton actionListener="#{categoriaBean.guardarCategoria}" value="#{msg['guardar']}" update="mainForm frmCategorias :frmHeader:messages"/>
 				<p:outputLabel value="" />
 			</p:panelGrid>
 		</div>
@@ -35,23 +35,23 @@
 	<br/>
 	
 	<!-- TAULA CATEGORIES -->		
-	<h:form id="frmCategorias">
+	<h:form id="frmCategorias" rendered="#{sessionBean.admin}" >
 		<p:dataTable var="categoria" value="#{categoriaBean.categorias}" style="padding:15px;"
-			emptyMessage="No s'han trobat categories">
+			emptyMessage="#{msg['categoria.vacia']}">
 			
-			<f:facet name="header">Categories</f:facet>
+			<f:facet name="header">#{msg['categoria.categorias']}</f:facet>
 			
-			<p:column headerText="Categoria">
+			<p:column headerText="#{msg['categoria.descripcion']}">
 				<h:outputText value="#{categoria.descripcion}" />
 			</p:column>
 			
 			<p:column>
-				<p:commandButton action="#{categoriaBean.cargarModificacionCategoria}" value="Editar" update=":mainForm :frmCategorias">
+				<p:commandButton action="#{categoriaBean.cargarModificacionCategoria}" value="#{msg['editar']}" update=":mainForm :frmCategorias">
 					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoria}" />
 				</p:commandButton>
 				
 				<p:commandButton action="#{categoriaBean.eliminarCategoria}" value="Eliminar" update=":mainForm :frmCategorias :frmHeader:messages">
-					<p:confirm header="Eliminar" message="Està segur que vol eliminar la categoria?" icon="pi pi-info-circle" />
+					<p:confirm header="#{msg['eliminar']}" message="#{msg['categoria.eliminar']}" icon="pi pi-info-circle" />
 					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoria}" />
 				</p:commandButton>
 				

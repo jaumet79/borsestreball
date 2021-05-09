@@ -12,11 +12,11 @@
 	<ui:define name="content" >
 	
 	<br/>
-	<h:outputText value="#{msg['bolsas.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<h:outputText value="#{msg['bolsas.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;" rendered="#{sessionBean.editor}"/>
 	<br/><br/>	
 	
 	<!-- TOOLBAR -->
-	<h:form id="frmToolbar">
+	<h:form id="frmToolbar" rendered="#{sessionBean.admin}" >
 		<div style="padding-left:5px;padding-right:5px">
 			<p:toolbar>
 				<p:toolbarGroup>
@@ -28,9 +28,9 @@
 	
 
 	
-		<div id="mainContainer">
+		<div id="mainContainer" >
 		
-			<h:form>
+			<h:form rendered="#{sessionBean.editor}">
 			
 				<p:dataTable var="bolsa" value="#{bolsaBean.bolsas}" style="padding:15px;">
 				
@@ -56,13 +56,13 @@
 						</h:outputText>
 					</p:column>
 					
-					<p:column> 
+					<p:column rendered="#{sessionBean.admin}"> 
  						<p:commandButton action="bolsa" value="#{msg['bolsas.editar']}" ajax="false" >
  							<f:param name="bolsaId" value="#{bolsa.id}" />
  						</p:commandButton>
  					</p:column>
  						
- 					<p:column> 
+ 					<p:column rendered="#{sessionBean.editor}"> 
  						<p:commandButton action="seleccion" value="#{msg['bolsas.inscripciones']}" ajax="false" >
  							<f:param name="bolsaId" value="#{bolsa.id}" />
  						</p:commandButton>

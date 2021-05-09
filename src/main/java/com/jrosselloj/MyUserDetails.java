@@ -6,6 +6,11 @@ import java.util.Locale;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+/**
+ * Clase auxiliar que exten de User per a poder guardar L'idioma per defecte de l'usuari logetjat
+ * 
+ * @author Jaume
+ */
 public class MyUserDetails extends User {
 	
 	private static final long serialVersionUID = 4945683374343655335L;

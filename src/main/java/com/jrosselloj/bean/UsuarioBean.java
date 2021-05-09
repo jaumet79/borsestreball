@@ -25,9 +25,11 @@ public class UsuarioBean extends BaseBean {
 	private Usuario usuario = new Usuario();
 	
 	private List<IdiomaEnum> idiomas = new ArrayList<>(Arrays.asList(IdiomaEnum.values()));
-	private List<RolEnum> rols = new ArrayList<>(Arrays.asList(RolEnum.values()));
+	private List<RolEnum> rols = RolEnum.getRolsPantallaUsuarios();
 	
 	private List<Usuario> usuaris;
+	
+	private boolean modoEdicion = false;
 	
 	@PostConstruct
 	public void init() {
@@ -50,12 +52,13 @@ public class UsuarioBean extends BaseBean {
 		usuarioService.registrar(usuario);
 		usuario = new Usuario();
 		carregaUsuaris();
+		modoEdicion = false;
 		
 		showInfo("Usuari guardat correctament");
 	}
 	
 	public void cargarModificacionUsuario() {
-		//		usuarioService.findByUsuari(null)
+		modoEdicion = true;
 	}
 	
 	public List<IdiomaEnum> getIdiomas() {
@@ -71,6 +74,12 @@ public class UsuarioBean extends BaseBean {
 		return usuaris;
 	}
 	
+	public boolean isModoEdicion() {
+		return modoEdicion;
+	}
 	
+	public boolean isUsuarioConsultor() {
+		return usuario != null && RolEnum.CONSULTOR.equals(usuario.getRol());
+	}
 	
 }

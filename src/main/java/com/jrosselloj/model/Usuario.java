@@ -2,6 +2,7 @@ package com.jrosselloj.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -29,7 +30,7 @@ public class Usuario {
 	@Enumerated(EnumType.STRING)
 	private IdiomaEnum idiomaDefecte;
 	
-	@OneToOne(mappedBy = "usuariConsulta")
+	@OneToOne(mappedBy = "usuariConsulta", cascade = CascadeType.ALL)
 	private Persona persona;
 	
 	@OneToMany(mappedBy = "usuariCreador")

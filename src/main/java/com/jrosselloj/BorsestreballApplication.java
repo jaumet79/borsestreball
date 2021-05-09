@@ -18,6 +18,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.sun.faces.config.ConfigureListener;
 
+/**
+ * Clase Principal de l'aplicació, utilitzada per a la configuració
+ * 
+ * @author Jaume
+ */
 @SpringBootApplication
 public class BorsestreballApplication implements WebMvcConfigurer {
 	

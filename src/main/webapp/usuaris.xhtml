@@ -12,54 +12,58 @@
 	<ui:define name="content">
 	
 	<br/>
-	<h:outputText value="Gestió usuaris" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<h:outputText value="#{msg['usuarios.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;" rendered="#{sessionBean.admin || sessionBean.adminSis}"/>
 	<br/><br/>
 	
-	<h:form id="mainForm">
+	<h:form id="mainForm" rendered="#{sessionBean.admin || sessionBean.adminSis}">
 		
 		<!-- FORMULARI USUARI -->
 		<div style="padding:15px;">
 			<p:panelGrid columns="3">
-				<p:outputLabel value="Nom usuari"/>
+				<p:outputLabel value="#{msg['usuarios.nombre']}"/>
 				<p:inputText id="inpUsuNom"	value="#{usuarioBean.usuario.usuari}" 
-					required="true" requiredMessage="Nom usuari obligatori" maxlength="30" 
+					required="true" requiredMessage="#{msg['usuarios.nombre.obligatorio']}" maxlength="30" 
 					disabled="#{usuarioBean.usuario.usuari != null}"/>
 				<p:message for="inpUsuNom"/>
 				
-				<p:outputLabel value="Contrasenya"/>
+				<p:outputLabel value="#{msg['usuarios.password']}" rendered="#{!usuarioBean.modoEdicion}" />
 				<p:password id="inpUsuCon"	value="#{usuarioBean.usuario.password}" 
-					required="true" requiredMessage="Contrasenya obligatoria" maxlength="30" />
-				<p:message for="inpUsuCon"/>
+					required="true" requiredMessage="#{msg['usuarios.password.obligatoria']}" maxlength="30" rendered="#{!usuarioBean.modoEdicion}"  />
+				<p:message for="inpUsuCon" rendered="#{!usuarioBean.modoEdicion}" />
 				
-				<p:outputLabel for="@next" value="Rol" />
-              	<p:selectOneMenu id="selRol" value="#{usuarioBean.usuario.rol}">
+				<p:outputLabel for="@next" value="#{msg['usuarios.rol']}" rendered="#{!usuarioBean.usuarioConsultor}" />
+              	<p:selectOneMenu id="selRol" value="#{usuarioBean.usuario.rol}" rendered="#{!usuarioBean.usuarioConsultor}" >
                   	<f:selectItems value="#{usuarioBean.rols}" var="varRol" itemValue="#{varRol}" itemLabel="#{varRol.descripcion}"  />
                	</p:selectOneMenu>
-	            <p:message for="selRol"/>
+	            <p:message for="selRol" rendered="#{!usuarioBean.usuarioConsultor}" />
 	            
-	            <p:outputLabel for="@next" value="Idioma"/>
+				<p:outputLabel for="@next" value="#{msg['usuarios.rol']}" rendered="#{usuarioBean.modoEdicion and usuarioBean.usuarioConsultor}" />
+	            <p:inputText value="#{usuarioBean.usuario.rol.descripcion}"	maxlength="30" disabled="true" rendered="#{usuarioBean.modoEdicion and usuarioBean.usuarioConsultor}" />
+	            <p:outputLabel rendered="#{usuarioBean.modoEdicion and usuarioBean.usuarioConsultor}" />
+	            
+	            <p:outputLabel for="@next" value="#{msg['usuarios.idioma']}"/>
 	            <p:selectOneMenu id="selIdioma" value="#{usuarioBean.usuario.idiomaDefecte}" required="true" >
 	            	<f:selectItems value="#{usuarioBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma.descripcion}"  />
 				</p:selectOneMenu>						
 				<p:message for="selIdioma"/>
 			
-				<p:commandButton action="usuaris" value="Neteja" ajax="false" immediate="true"/>
-				<p:commandButton actionListener="#{usuarioBean.guardarUsuario}" value="Desa" update="mainForm frmUsuaris :frmHeader:messages" />
+				<p:commandButton action="usuaris" value="#{msg['limpieza']}" ajax="false" immediate="true"/>
+				<p:commandButton actionListener="#{usuarioBean.guardarUsuario}" value="#{msg['guardar']}" update="mainForm frmUsuaris :frmHeader:messages" />
 				<p:outputLabel value="" />
 				
 			</p:panelGrid>
 		</div>
 	</h:form>
 	
-	<h:form id="frmUsuaris">
+	<h:form id="frmUsuaris" rendered="#{sessionBean.admin || sessionBean.adminSis}">
 	
 		<!-- TAULA USUARIS -->
 		<p:dataTable var="usuari" value="#{usuarioBean.usuaris}" style="padding:15px;" 
-			emptyMessage="No s'han trobat usuaris" >
+			emptyMessage="#{msg['usuarios.vacia']}" sortBy="#{usuari.usuari}" >
 			
-			<f:facet name="header">Usuaris</f:facet>
+			<f:facet name="header">#{msg['usuarios.usuarios']}</f:facet>
 			
-			<p:column headerText="usuari">
+			<p:column headerText="#{msg['usuarios.nombre']}">
 				<h:outputText value="#{usuari.usuari}" />
 			</p:column>
 			
@@ -69,21 +73,21 @@
 			</p:column>
 			 -->
 			
-			<p:column headerText="rol">
+			<p:column headerText="#{msg['usuarios.rol']}">
 				<h:outputText value="#{usuari.rol.descripcion}" />
 			</p:column>
 			
-			<p:column headerText="idiomaDefecte">
+			<p:column headerText="#{msg['usuarios.idioma']}">
 				<h:outputText value="#{usuari.idiomaDefecte.descripcion}" />
 			</p:column>
 			
 			<p:column>
-				<p:commandButton actionListener="#{usuarioBean.cargarModificacionUsuario}" value="Editar" update="mainForm">
+				<p:commandButton actionListener="#{usuarioBean.cargarModificacionUsuario}" value="#{msg['editar']}" update="mainForm">
 					<f:setPropertyActionListener value="#{usuari}" target="#{usuarioBean.usuario}" />
 				</p:commandButton>
 			</p:column>
 			
-			<f:facet name="footer">Total: #{fn:length(usuarioBean.usuaris)} usuaris</f:facet>
+			<f:facet name="footer">#{msg['total']}: #{fn:length(usuarioBean.usuaris)} #{msg['usuarios.usuarios_m']}</f:facet>
         		
 		</p:dataTable>
 

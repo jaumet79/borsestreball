@@ -11,10 +11,10 @@
 	<ui:define name="content">
 
 	<br/>
-	<h:outputText value="#{msg['bolsa.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;"/>
+	<h:outputText value="#{msg['bolsa.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;" rendered="#{sessionBean.admin}" />
 	<br/><br/>
 
-	<h:form id="mainForm">
+	<h:form id="mainForm" rendered="#{sessionBean.admin}">
 
 		<!-- FORMULARI BORSA -->
 		<div style="padding:15px;">
@@ -51,7 +51,7 @@
 		<div style="padding-left:5px;padding-right:5px">
 			<p:toolbar>
             	<p:toolbarGroup>
-              	  <p:commandButton value="Afegir criteri" icon="pi pi-plus" action="#{bolsaBean.onAddNew}"
+              	  <p:commandButton value="#{msg['bolsas.criterio.anyadir']}" icon="pi pi-plus" action="#{bolsaBean.onAddNew}"
                                   process="@this" 
                                  styleClass="ui-button-success" style="margin-right: .5rem"
                                   oncomplete="PF('dtCriteris').addRow();" />
