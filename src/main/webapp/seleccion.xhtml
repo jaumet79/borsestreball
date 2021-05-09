@@ -36,6 +36,10 @@
 			
 			<f:facet name="header">#{msg['inscripcion.inscripciones']}</f:facet>
 			
+			<p:column headerText="#{msg['inscripcion.orden']}">
+				<h:outputText value="#{seleccion.orden}" />
+			</p:column>
+			
 			<p:column headerText="#{msg['inscripcion.documento']}">
 				<h:outputText value="#{seleccion.persona.dni}" />
 			</p:column>

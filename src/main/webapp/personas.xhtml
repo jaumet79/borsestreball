@@ -100,6 +100,12 @@
 				</p:commandButton>
 			</p:column>
 			
+			<p:column>
+				<p:commandButton action="consulta" value="#{msg['candidatos.consultar']}" >
+					 <f:param name="personaId" value="#{persona.dni}" />
+				</p:commandButton>
+			</p:column>
+			
 			<f:facet name="footer">#{msg['total']}: #{fn:length(personaBean.persones)} #{msg['candidatos.candidatos_m']}</f:facet>
 		</p:dataTable>
 

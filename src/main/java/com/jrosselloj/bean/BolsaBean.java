@@ -3,9 +3,6 @@ package com.jrosselloj.bean;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +27,6 @@ public class BolsaBean extends BaseBean {
 	@Autowired
 	private ICategoriaService categoriaService;
 	
-	private SessionBean sessionBean;
-	
 	private List<Bolsa> bolsas;
 	
 	private Bolsa bolsa = new Bolsa();
@@ -41,14 +36,9 @@ public class BolsaBean extends BaseBean {
 	@PostConstruct
 	public void init() {
 		
-		sessionBean = (SessionBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("languageBean");
-		
 		categorias = categoriaService.findAll();
 		
-		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext()
-				.getRequest();
-		
-		String bolsaId = request.getParameter("bolsaId");
+		String bolsaId = getParametro("bolsaId");
 		
 		if (StringUtils.hasLength(bolsaId)) {
 			bolsa = bolsaService.findById(Integer.parseInt(bolsaId));
@@ -72,13 +62,11 @@ public class BolsaBean extends BaseBean {
 	}
 	
 	public void onRowEdit(RowEditEvent<Criterio> event) {
-		FacesMessage msg = new FacesMessage("Criteri Editat", String.valueOf(event.getObject().getDescripcio()));
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		showInfo("S'ha editat el criteri", String.valueOf(event.getObject().getDescripcio()));
 	}
 	
 	public void onRowCancel(RowEditEvent<Criterio> event) {
-		FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getId()));
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		showInfo("S'ha cancel·lat l'edició del criteri", String.valueOf(event.getObject().getId()));
 	}
 	
 	public void removeCriterio(Criterio criterio) {
@@ -96,7 +84,7 @@ public class BolsaBean extends BaseBean {
 	}
 	
 	public void saveBolsa() {
-		bolsaService.saveBolsa(bolsa, sessionBean.getUsuario());
+		bolsaService.saveBolsa(bolsa, getUsuario());
 		
 	}
 	

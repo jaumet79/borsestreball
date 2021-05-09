@@ -54,7 +54,7 @@ public class UsuarioBean extends BaseBean {
 		carregaUsuaris();
 		modoEdicion = false;
 		
-		showInfo("Usuari guardat correctament");
+		showInfo("Usuari guardat correctament", null);
 	}
 	
 	public void cargarModificacionUsuario() {

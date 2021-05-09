@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -30,7 +28,6 @@ public class SeleccionBean extends BaseBean {
 	@Autowired
 	IPersonaService personaService;
 	
-	//	private List<Seleccion> personasByBolsa;
 	private Bolsa bolsa;
 	
 	private String dni;
@@ -45,13 +42,7 @@ public class SeleccionBean extends BaseBean {
 	
 	@PostConstruct
 	public void init() {
-		
-		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext()
-				.getRequest();
-		
-		bolsaId = request.getParameter("bolsaId");
-		
-		// TODO mostrar error si no viene bolsaId
+		bolsaId = getParametro("bolsaId");
 		
 		cargarBolsa();
 	}
@@ -64,7 +55,7 @@ public class SeleccionBean extends BaseBean {
 		personaBusqueda = personaService.findByDni(dni);
 		
 		if (personaBusqueda == null) {
-			showInfo("No s'ha trobat cap persona amb aquest document");
+			showInfo("No s'ha trobat cap persona amb aquest document", null);
 		}
 		
 	}
@@ -81,10 +72,6 @@ public class SeleccionBean extends BaseBean {
 	public void openNew() {
 		
 	}
-	
-	//	public List<Seleccion> getPersonasByBolsa() {
-	//		return personasByBolsa;
-	//	}
 	
 	public void cargarMeritosBySeleccion() {
 		meritos = bolsaService.listaMeritosBySeleccion(seleccion);

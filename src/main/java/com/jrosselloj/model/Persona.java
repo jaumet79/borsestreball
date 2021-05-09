@@ -1,6 +1,7 @@
 package com.jrosselloj.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +9,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.jrosselloj.enums.IdiomaEnum;
 
@@ -40,6 +45,9 @@ public class Persona {
 	@JoinColumn(name = "usuariConsulta", referencedColumnName = "usuari")
 	private Usuario usuariConsulta;
 	
+	@OneToMany(mappedBy = "personaDni")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Seleccion> selecciones;
 	
 	
 	public String getDni() {
@@ -110,6 +118,11 @@ public class Persona {
 	
 	public void setUsuariConsulta(Usuario usuariConsulta) {
 		this.usuariConsulta = usuariConsulta;
+	}
+	
+	
+	public List<Seleccion> getSelecciones() {
+		return selecciones;
 	}
 	
 	

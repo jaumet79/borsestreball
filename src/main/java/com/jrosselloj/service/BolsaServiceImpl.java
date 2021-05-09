@@ -71,12 +71,10 @@ public class BolsaServiceImpl implements IBolsaService {
 	
 	@Override
 	public void addPersonaToBolsa(Persona persona, Bolsa bolsa) {
-		
 		Seleccion seleccion = new Seleccion();
-		//seleccion.setPersona(persona);
-		seleccion.setPersonaDni(persona.getDni());
-		//seleccion.setBolsa(bolsa);
 		seleccion.setBolsaId(bolsa.getId());
+		seleccion.setPersonaDni(persona.getDni());
+		seleccion.setPuntuacionTotal(0);
 		seleccion.setEstat(EstatSeleccio.ADMES);
 		
 		seleccionRepo.save(seleccion);

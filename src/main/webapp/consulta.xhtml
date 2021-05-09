@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:define name="content">
+	
+	<br/>
+	<h:outputText value="#{msg['consulta.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;" />
+	<br/><br/>
+	
+	<h:form id="mainForm" >
+
+		<!-- FORMULARI PERSONES -->
+		<div style="padding:15px;">
+			<p:panelGrid columns="2" >
+				<p:outputLabel value="#{msg['candidatos.documento']}" />
+				<p:inputText id="inpDocument" value="#{consultaBean.persona.dni}" disabled="true" />
+				
+				<p:outputLabel value="#{msg['candidatos.nombre']}"/>
+				<p:inputText id="inpNom" value="#{consultaBean.persona.nom}" disabled="true" />
+				
+				<p:outputLabel value="#{msg['candidatos.primer.apellido']}"/>
+				<p:inputText id="inpCognom1" value="#{consultaBean.persona.cognom1}" disabled="true" />
+				
+				<p:outputLabel value="#{msg['candidatos.segundo.apellido']}"/>
+				<p:inputText id="inpCognom2" value="#{consultaBean.persona.cognom2}" disabled="true" />
+				
+				<p:outputLabel value="#{msg['candidatos.fecha.nacimiento']}"/>
+				<p:calendar id="calNaixament" value="#{consultaBean.persona.dataNaixament}" 
+					pattern="dd/MM/yyyy" mask="true" navigator="true" maxdate="today" popUpIconOnly="true" 
+					disabled="true" />
+				
+				<p:outputLabel value="#{msg['candidatos.telefono']}"/>
+				<p:inputText id="inpTelf" value="#{consultaBean.persona.telefon}" maxlength="9" disabled="true" />
+	
+	            <p:outputLabel for="@next" value="#{msg['candidatos.Idioma']}"/>
+	            <p:inputText id="inpIdioma" value="#{consultaBean.persona.idioma.descripcion}" maxlength="9" disabled="true" />
+			</p:panelGrid>
+		</div>
+		
+	</h:form>
+	
+	<br/>
+
+<!-- TAULA PERSONES -->		
+	<h:form id="frmSelecciones"  >
+		<p:dataTable var="seleccion" value="#{consultaBean.persona.selecciones}" style="padding:15px;" 
+			widgetVar="tblSeleccion" emptyMessage="#{msg['consulta.vacia']}" >
+			
+			<f:facet name="header">#{msg['inscripcion.inscripciones']}</f:facet>
+			
+			<p:column headerText="#{msg['bolsas.descripcion']}" >
+				<h:outputText value="#{seleccion.bolsa.descripcio}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['inscripcion.estado']}" >
+				<h:outputText value="#{seleccion.estat}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['inscripcion.motivo']}" >
+				<h:outputText value="#{seleccion.motiuExclusio}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['inscripcion.puntuacion.total']}" >
+				<h:outputText value="#{seleccion.puntuacionTotal}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['inscripcion.orden']}" >
+				<h:outputText value="#{seleccion.ordenConsultaPersona}" />
+			</p:column>
+			
+			<f:facet name="footer">#{msg['total']}: #{fn:length(consultaBean.persona.selecciones)} #{msg['consulta.inscripciones']}</f:facet>
+		</p:dataTable>
+
+
+	</h:form>
+	
+
+	</ui:define>
+
+</ui:composition>

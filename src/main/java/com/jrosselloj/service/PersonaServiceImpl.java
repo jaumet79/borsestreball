@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.jrosselloj.enums.RolEnum;
 import com.jrosselloj.model.Persona;
+import com.jrosselloj.model.Seleccion;
 import com.jrosselloj.model.Usuario;
 import com.jrosselloj.repository.IPersonaRepo;
 
@@ -20,7 +21,6 @@ public class PersonaServiceImpl implements IPersonaService {
 	private IPersonaRepo personaRepo;
 	
 	@Autowired
-	//private IUsuarioRepo usuarioRepo;
 	private IUsuarioService usuarioService;
 	
 	@Override
@@ -54,5 +54,23 @@ public class PersonaServiceImpl implements IPersonaService {
 		
 		return persona.isPresent() ? persona.get() : null;
 	}
+	
+	@Override
+	public Persona findByDniAndInfoBolsas(String dni) {
+		Persona persona = findByDni(dni);
+		
+		for (Seleccion seleccion : persona.getSelecciones()) {
+			for (Seleccion seleccionBolsa : seleccion.getBolsa().getListaSeleccion()) {
+				if (seleccion.getPersonaDni().equals(seleccionBolsa.getPersonaDni())) {
+					seleccion.setOrdenConsultaPersona(seleccionBolsa.getOrden());
+					break;
+				}
+			}
+		}
+		
+		return persona;
+	}
+	
+	
 	
 }

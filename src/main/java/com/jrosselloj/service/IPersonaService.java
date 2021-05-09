@@ -12,4 +12,6 @@ public interface IPersonaService {
 	
 	Persona findByDni(String dni);
 	
+	Persona findByDniAndInfoBolsas(String dni);
+	
 }

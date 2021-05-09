@@ -45,7 +45,7 @@ public class CategoriaBean extends BaseBean {
 		categoria = new Categoria();
 		cargaCategorias();
 		
-		showInfo("Categoria guardada correctament");
+		showInfo("Categoria guardada correctament", null);
 	}
 	
 	public void cargarModificacionCategoria() {
@@ -62,10 +62,10 @@ public class CategoriaBean extends BaseBean {
 			categoria = new Categoria();
 			cargaCategorias();
 			
-			showInfo("Categoria eliminada correctament");
+			showInfo("Categoria eliminada correctament", null);
 			
 		} catch (DataIntegrityViolationException e) {
-			showError("No s'ha pogut eliminar degut a que hi ha alguna borsa amb aquesta categoria");
+			showError("No s'ha pogut eliminar degut a que hi ha alguna borsa amb aquesta categoria", null);
 			
 		}
 		

@@ -1,5 +1,6 @@
 package com.jrosselloj.bean;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +43,7 @@ public class SessionBean {
 		locale = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getLocale();
 		idiomaSelected = IdiomaEnum.getIdiomaEnumByLocale(locale);
 		
+		redireccionRolConsulta();
 	}
 	
 	//value change event listener
@@ -122,9 +124,30 @@ public class SessionBean {
 		return isConsultor;
 	}
 	
+	public boolean isOnlyConsultor() {
+		return hadRole(RolEnum.CONSULTOR);
+	}
+	
 	public boolean isAdminSis() {
 		return hadRole(RolEnum.ADMIN_SIS);
 	}
+	
+	public void redireccionRolConsulta() {
+		if (isOnlyConsultor()) {
+			redirectTo("/consulta.xhtml?personaId=" + getUsuario().getUsuari());
+		}
+		
+	}
+	
+	private void redirectTo(String url) {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	public List<IdiomaEnum> getIdiomas() {
 		return idiomas;

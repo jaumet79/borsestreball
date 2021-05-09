@@ -34,7 +34,6 @@ public class BorsestreballApplication implements WebMvcConfigurer {
 	public ServletRegistrationBean facesServletRegistration() {
 		ServletRegistrationBean registration = new ServletRegistrationBean<>(new FacesServlet(), "*.xhtml");
 		registration.setLoadOnStartup(1);
-		//		registration.addUrlMappings("*.jrj");
 		registration.addUrlMappings("/index.xhtml");
 		return registration;
 	}
@@ -48,6 +47,10 @@ public class BorsestreballApplication implements WebMvcConfigurer {
 			//servletContext.setInitParameter("primefaces.THEME", "redmond");
 			
 			//			servletContext.setInitParameter("javax.faces.FACELETS_LIBRARIES", "/WEB-INF/springsecurity.taglib.xml");
+			
+			// Solució problema mostrar dates a nes front
+			// https://stackoverflow.com/questions/26858872/jsf-datetimeconverter-showing-date-one-day-before
+			servletContext.setInitParameter("javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE", "true");
 		};
 	}
 	
@@ -73,33 +76,7 @@ public class BorsestreballApplication implements WebMvcConfigurer {
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("forward:/index.xhtml");
-		//registry.addViewController("/login").setViewName("forward:/index.jsp");
-		//registry.addViewController("/qmgr/**").setViewName("forward:/index.jsp");
+		registry.addViewController("/").setViewName("forward:/login.xhtml");
 	}
-	
-	
-	
-	
-	
-	//	@Bean
-	//	public LocaleResolver localeResolver() {
-	//		SessionLocaleResolver slr = new SessionLocaleResolver();
-	//		//slr.setDefaultLocale(Locale.US);
-	//		slr.setDefaultLocale(new Locale("ca", "ES"));
-	//		return slr;
-	//	}
-	//	
-	//	@Bean
-	//	public LocaleChangeInterceptor localeChangeInterceptor() {
-	//		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-	//		lci.setParamName("lang");
-	//		return lci;
-	//	}
-	//	
-	//	@Override
-	//	public void addInterceptors(InterceptorRegistry registry) {
-	//		registry.addInterceptor(localeChangeInterceptor());
-	//	}
 	
 }

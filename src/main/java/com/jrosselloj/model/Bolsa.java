@@ -17,6 +17,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OrderBy;
 
+import com.jrosselloj.enums.EstatSeleccio;
+
 @Entity
 public class Bolsa {
 	
@@ -46,7 +48,7 @@ public class Bolsa {
 	
 	@OneToMany(mappedBy = "bolsa")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OrderBy(clause = "puntuacionTotal DESC")
+	@OrderBy(clause = "estat, puntuacionTotal DESC")
 	private List<Seleccion> listaSeleccion;
 	
 	
@@ -127,7 +129,19 @@ public class Bolsa {
 	
 	
 	public List<Seleccion> getListaSeleccion() {
+		if (listaSeleccion != null) {
+			
+			int orden = 1;
+			
+			for (Seleccion seleccion : listaSeleccion) {
+				if (EstatSeleccio.ADMES.equals(seleccion.getEstat())) {
+					seleccion.setOrden(orden++);
+				}
+			}
+		}
+		
 		return listaSeleccion;
+		
 	}
 	
 	

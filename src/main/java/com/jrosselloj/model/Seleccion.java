@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.jrosselloj.enums.EstatSeleccio;
 import com.jrosselloj.enums.MotiuExclusio;
@@ -40,13 +41,11 @@ public class Seleccion {
 	@JoinColumn(name = "persona", referencedColumnName = "dni", insertable = false, updatable = false)
 	private Persona persona;
 	
-	//	@OneToMany
-	//	@JoinColumns({
-	//			@JoinColumn(name = "bolsa", referencedColumnName = "seleccion.bolsa"),
-	//			@JoinColumn(name = "persona", referencedColumnName = "seleccion.persona")
-	//	})
-	//	private List<Merito> meritos;
+	@Transient
+	private Integer orden;
 	
+	@Transient
+	private Integer ordenConsultaPersona;
 	
 	public Integer getBolsaId() {
 		return bolsaId;
@@ -120,12 +119,23 @@ public class Seleccion {
 		this.motiuExclusio = motiuExclusio;
 	}
 	
-	//	public List<Merito> getMeritos() {
-	//		return meritos;
-	//	}
-	//	
-	//	public void setMeritos(List<Merito> meritos) {
-	//		this.meritos = meritos;
-	//	}
+	public Integer getOrden() {
+		return orden;
+	}
+	
+	public void setOrden(Integer orden) {
+		this.orden = orden;
+	}
+	
+	
+	public Integer getOrdenConsultaPersona() {
+		return ordenConsultaPersona;
+	}
+	
+	
+	public void setOrdenConsultaPersona(Integer ordenConsultaPersona) {
+		this.ordenConsultaPersona = ordenConsultaPersona;
+	}
+	
 	
 }
