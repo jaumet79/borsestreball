@@ -30,6 +30,8 @@ public class Usuario {
 	@Enumerated(EnumType.STRING)
 	private IdiomaEnum idiomaDefecte;
 	
+	private Boolean activo = true;
+	
 	@OneToOne(mappedBy = "usuariConsulta", cascade = CascadeType.ALL)
 	private Persona persona;
 	
@@ -81,6 +83,14 @@ public class Usuario {
 	
 	public List<Bolsa> getBolsasCreadas() {
 		return bolsasCreadas;
+	}
+	
+	public Boolean getActivo() {
+		return activo;
+	}
+	
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
 	}
 	
 }

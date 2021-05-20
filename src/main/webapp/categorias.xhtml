@@ -26,8 +26,8 @@
 				<p:message for="inpDocument"/>
 				
 				<p:commandButton action="categorias" value="#{msg['limpieza']}" ajax="false" immediate="true"/>
-				<p:commandButton actionListener="#{categoriaBean.guardarCategoria}" value="#{msg['guardar']}" update="mainForm frmCategorias :frmHeader:messages"/>
-				<p:outputLabel value="" />
+				<p:commandButton actionListener="#{categoriaBean.guardarCategoria}" value="#{msg['guardar']}" update="mainForm frmCategorias :frmHeader:messages" id="btnForm" />
+				<p:defaultCommand target="btnForm" />
 			</p:panelGrid>
 		</div>
 	</h:form>

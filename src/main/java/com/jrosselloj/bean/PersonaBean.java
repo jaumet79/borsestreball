@@ -49,7 +49,7 @@ public class PersonaBean extends BaseBean {
 		persona = new Persona();
 		carregaPersones();
 		
-		showInfo("Persona guardada correctament", null);
+		showInfo(getMessage("candidatos.msg.guardar.ok"));
 	}
 	
 	public void cargarModificacionPersona() {

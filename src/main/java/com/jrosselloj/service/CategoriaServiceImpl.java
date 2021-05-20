@@ -39,6 +39,13 @@ public class CategoriaServiceImpl implements ICategoriaService {
 		
 	}
 	
-	
+	@Override
+	public boolean existeCategoria(String descripcion) {
+		List<Categoria> categorias = categoriaRepo.findAllByDescripcion(descripcion);
+		
+		return categorias != null && categorias.size() > 0;
+		
+		
+	}
 	
 }

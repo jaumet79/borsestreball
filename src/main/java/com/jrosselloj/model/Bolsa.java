@@ -5,7 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +21,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OrderBy;
 
 import com.jrosselloj.enums.EstatSeleccio;
+import com.jrosselloj.enums.FaseBorsa;
 
 @Entity
 public class Bolsa {
@@ -26,7 +30,12 @@ public class Bolsa {
 	@GeneratedValue
 	private Integer id;
 	
+	@Column(length = 50, nullable = false)
 	private String descripcio;
+	
+	@Column(nullable = false, length = 15)
+	@Enumerated(EnumType.STRING)
+	private FaseBorsa fase = FaseBorsa.SOLICITUD;
 	
 	private Date dataPublicacio;
 	
@@ -126,7 +135,13 @@ public class Bolsa {
 		this.usuariCreador = usuariCreador;
 	}
 	
+	public FaseBorsa getFase() {
+		return fase;
+	}
 	
+	public void setFase(FaseBorsa fase) {
+		this.fase = fase;
+	}
 	
 	public List<Seleccion> getListaSeleccion() {
 		if (listaSeleccion != null) {

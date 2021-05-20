@@ -52,15 +52,16 @@
 	
 	            <p:outputLabel for="@next" value="#{msg['candidatos.Idioma']}"/>
 	            <p:selectOneMenu id="selIdioma" value="#{personaBean.persona.idioma}">
-	            	<f:selectItems value="#{personaBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma.descripcion}"  />
+	            	<f:selectItems value="#{personaBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{msg[varIdioma.message]}"  />
 	            </p:selectOneMenu>						
 				<p:message for="selIdioma"/>
 			
 				<p:commandButton action="personas" value="#{msg['limpieza']}" ajax="false" immediate="true"/>
-				<p:commandButton actionListener="#{personaBean.guardarPersona}" value="#{msg['guardar']}" 
+				<p:commandButton id="btnForm" actionListener="#{personaBean.guardarPersona}" value="#{msg['guardar']}" 
 					update=":mainForm :frmPersonas :frmHeader:messages"
 					oncomplete="PF('tblPersona').filter()"/>
-				<p:outputLabel value="" />
+				<p:defaultCommand target="btnForm" />
+
 				
 			</p:panelGrid>
 		</div>
@@ -84,6 +85,10 @@
 				<h:outputText value="#{persona.nomComplet}" />
 			</p:column>
 			
+			<p:column headerText="#{msg['candidatos.telefono']}" sortBy="#{persona.telefon}" filterBy="#{persona.telefon}" filterMatchMode="contains">
+				<h:outputText value="#{persona.telefon}" />
+			</p:column>
+			
 			<p:column headerText="#{msg['candidatos.fecha.nacimiento']}" sortBy="#{persona.dataNaixament}">
 				<h:outputText value="#{persona.dataNaixament}" >
 					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
@@ -91,7 +96,7 @@
 			</p:column>
 			
 			<p:column headerText="#{msg['candidatos.Idioma']}">
-				<h:outputText value="#{persona.idioma.descripcion}" />
+				<h:outputText value="#{msg[persona.idioma.message]}" />
 			</p:column>
 			
 			<p:column>

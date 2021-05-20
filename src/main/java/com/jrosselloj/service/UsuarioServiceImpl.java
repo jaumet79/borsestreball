@@ -1,6 +1,7 @@
 package com.jrosselloj.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,8 +20,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	private BCryptPasswordEncoder bcrypt;
 	
 	@Override
-	public void registrar(Usuario usuario) {
-		usuario.setPassword(bcrypt.encode(usuario.getPassword()));
+	public void registrar(Usuario usuario, boolean encriptarPwd) {
+		
+		usuario.setUsuari(usuario.getUsuari().trim());
+		usuario.setPassword(usuario.getPassword().trim());
+		
+		if (encriptarPwd) {
+			usuario.setPassword(bcrypt.encode(usuario.getPassword()));
+		}
 		
 		usuarioRepo.save(usuario);
 		
@@ -34,6 +41,17 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public Usuario findById(String usuario) {
 		return usuarioRepo.findByUsuari(usuario);
+	}
+	
+	@Override
+	public void cambiarContrasenya(String usuario, String nuevoPwd) {
+		Optional<Usuario> usuarioOpt = usuarioRepo.findById(usuario);
+		if (usuarioOpt.isPresent()) {
+			Usuario usu = usuarioOpt.get();
+			usu.setPassword(nuevoPwd);
+			registrar(usu, true);
+		}
+		
 	}
 	
 }

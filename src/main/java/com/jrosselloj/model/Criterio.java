@@ -1,5 +1,6 @@
 package com.jrosselloj.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,13 +18,16 @@ public class Criterio {
 	@GeneratedValue
 	private Integer id;
 	
+	@Column(length = 50, nullable = false)
 	private String descripcio;
 	
 	@Enumerated(EnumType.STRING)
 	private TipoCriterio tipo;
 	
+	@Column(nullable = false)
 	private Integer puntosPorUnidad;
 	
+	@Column(nullable = false)
 	private Integer puntuacionMaxima;
 	
 	@ManyToOne

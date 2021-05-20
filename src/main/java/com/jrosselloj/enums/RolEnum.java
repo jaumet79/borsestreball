@@ -6,21 +6,21 @@ import java.util.List;
 
 public enum RolEnum {
 	
-	ADMIN("Administrador"),
-	EDITOR("Editor"),
-	CONSULTOR("Consultor"),
+	ADMIN("rol.administrador"),
+	EDITOR("rol.editor"),
+	CONSULTOR("rol.consultor"),
 	
-	ADMIN_SIS("Administrador sistema");
+	ADMIN_SIS("rol.admin.sis");
 	
-	private String descripcion;
+	private String message;
 	
-	private RolEnum(String descripcion) {
-		this.descripcion = descripcion;
+	private RolEnum(String message) {
+		this.message = message;
 	}
 	
 	
-	public String getDescripcion() {
-		return descripcion;
+	public String getMessage() {
+		return message;
 	}
 	
 	

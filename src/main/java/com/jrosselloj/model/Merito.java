@@ -54,54 +54,48 @@ public class Merito {
 		this.criterioId = criterioId;
 	}
 	
-	
 	public Criterio getCriterio() {
 		return criterio;
 	}
-	
 	
 	public void setCriterio(Criterio criterio) {
 		this.criterio = criterio;
 	}
 	
-	
 	public Integer getUnidades() {
 		return unidades;
 	}
-	
 	
 	public void setUnidades(Integer unidades) {
 		this.unidades = unidades;
 	}
 	
-	
-	
 	public Integer getBolsaId() {
 		return bolsaId;
 	}
-	
-	
 	
 	public void setBolsaId(Integer bolsaId) {
 		this.bolsaId = bolsaId;
 	}
 	
-	
-	
 	public String getPersonaDni() {
 		return personaDni;
 	}
-	
-	
 	
 	public void setPersonaDni(String personaDni) {
 		this.personaDni = personaDni;
 	}
 	
-	
-	
-	
-	
-	
+	public Integer getTotal() {
+		Integer total = null;
+		
+		if (this.unidades != null) {
+			total = this.unidades * this.criterio.getPuntosPorUnidad();
+			total = total > this.criterio.getPuntuacionMaxima() ? this.criterio.getPuntuacionMaxima() : total;
+			
+		}
+		
+		return total;
+	}
 	
 }

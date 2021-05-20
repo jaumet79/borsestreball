@@ -10,4 +10,6 @@ public interface ICategoriaRepo extends JpaRepository<Categoria, Integer> {
 	
 	public List<Categoria> findAllByOrderByDescripcionAsc();
 	
+	public List<Categoria> findAllByDescripcion(String descripcion);
+	
 }

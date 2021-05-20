@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
 		} else {
 			Usuario us = usuarioRepo.findByUsuari(username);
 			
-			if (us != null) {
+			if (us != null && us.getActivo() != null && us.getActivo()) {
 				List<GrantedAuthority> roles = new ArrayList<>();
 				roles.add(new SimpleGrantedAuthority(us.getRol().toString()));
 				

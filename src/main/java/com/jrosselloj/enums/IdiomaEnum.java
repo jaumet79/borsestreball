@@ -4,19 +4,19 @@ import java.util.Locale;
 
 public enum IdiomaEnum {
 	
-	CATALA("Català", new Locale("ca", "ES")), //ca-ES
-	CASTELLA("Castellà", new Locale("es", "ES")); //es-ES
+	CATALA("idioma.catalan", new Locale("ca", "ES")), //ca-ES
+	CASTELLA("idioma.castellano", new Locale("es", "ES")); //es-ES
 	
-	private String descripcion;
+	private String message;
 	private Locale locale;
 	
-	private IdiomaEnum(String descripcion, Locale locale) {
-		this.descripcion = descripcion;
+	private IdiomaEnum(String message, Locale locale) {
+		this.message = message;
 		this.locale = locale;
 	}
 	
-	public String getDescripcion() {
-		return descripcion;
+	public String getMessage() {
+		return message;
 	}
 	
 	public Locale getLocale() {

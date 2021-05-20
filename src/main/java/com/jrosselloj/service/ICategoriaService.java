@@ -14,4 +14,6 @@ public interface ICategoriaService {
 	
 	void eliminar(Categoria categoria);
 	
+	boolean existeCategoria(String descripcion);
+	
 }

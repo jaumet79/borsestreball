@@ -15,12 +15,15 @@
     	<p:menubar>
 			<p:menuitem value="#{msg['menu.bolsas']}" outcome="index" icon="ui-icon-folder-open" 
 				style="margin-right:15px;" rendered="#{sessionBean.editor}" />
-			<p:menuitem value="#{msg['menu.usuarios']}" outcome="usuaris" icon="ui-icon-key" 
-				style="margin-right:15px;" rendered="#{sessionBean.admin || sessionBean.adminSis}" />
 			<p:menuitem value="#{msg['menu.personas']}" outcome="personas" icon="pi pi-fw pi-user-edit" 
 				style="margin-right:15px;" rendered="#{sessionBean.editor}" />
-			<p:menuitem value="#{msg['menu.categorias']}" outcome="categorias" icon="ui-icon-note" 
-				style="margin-right:15px;" rendered="#{sessionBean.admin}" />
+
+			<p:submenu label="#{msg['menu.administracion']}" icon="ui-icon-wrench" rendered="#{sessionBean.admin || sessionBean.adminSis}"> 			
+				<p:menuitem value="#{msg['menu.usuarios']}" outcome="usuaris" icon="ui-icon-key" 
+					style="margin-right:15px;" rendered="#{sessionBean.admin || sessionBean.adminSis}" />
+				<p:menuitem value="#{msg['menu.categorias']}" outcome="categorias" icon="ui-icon-note" 
+					style="margin-right:15px;" rendered="#{sessionBean.admin}" />
+			</p:submenu>
 			
 			<f:facet name="options">
 				<div>
@@ -31,7 +34,7 @@
 		        		<!-- CANVI IDIOMA -->
 		        		<p:selectOneMenu id="selIdioma" value="#{sessionBean.idiomaSelected}" valueChangeListener="#{sessionBean.countryLocaleCodeChanged}" 
 		        			onchange="submit()" style="margin-right:50px;">
-							<f:selectItems value="#{sessionBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma.descripcion}"  />
+							<f:selectItems value="#{sessionBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{msg[varIdioma.message]}"  />
 				        </p:selectOneMenu>	
 				    	
 				    	<!-- INFO USUARI --> 

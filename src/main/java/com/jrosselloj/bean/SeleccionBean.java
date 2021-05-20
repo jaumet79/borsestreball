@@ -55,22 +55,16 @@ public class SeleccionBean extends BaseBean {
 		personaBusqueda = personaService.findByDni(dni);
 		
 		if (personaBusqueda == null) {
-			showInfo("No s'ha trobat cap persona amb aquest document", null);
+			showInfo(getMessage("candidatos.msg.no.encontrar"));
 		}
 		
 	}
 	
 	public void addPersonaToBolsa() {
 		bolsaService.addPersonaToBolsa(personaBusqueda, bolsa);
-		
 		personaBusqueda = null;
-		
 		cargarBolsa();
-		
-	}
-	
-	public void openNew() {
-		
+		showInfo(getMessage("inscripcion.msg.incluir.ok"));
 	}
 	
 	public void cargarMeritosBySeleccion() {
@@ -78,71 +72,74 @@ public class SeleccionBean extends BaseBean {
 	}
 	
 	public void guardarMeritosToSeleccion() {
-		bolsaService.saveMeritosToSeleccion(meritos);
+		bolsaService.saveMeritosToSeleccion(meritos, seleccion);
 		cargarBolsa();
+		showInfo(getMessage("inscripcion.msg.meritos.ok"));
 		
 	}
 	
 	public void excluirSeleccion() {
 		bolsaService.excluirDeSeleccion(seleccion);
 		cargarBolsa();
+		showInfo(getMessage("inscripcion.msg.excluir.ok"));
 		
 	}
 	
 	public void incluirSeleccion() {
 		bolsaService.anularExclusionEnSeleccion(seleccion);
 		cargarBolsa();
-		
+		showInfo(getMessage("inscripcion.msg.incluir.ok"));
 	}
 	
+	public void deletePersonaFromBolsa() {
+		bolsaService.deletePersonaFromBolsa(seleccion);
+		cargarBolsa();
+		showInfo(getMessage("inscripcion.msg.eliminar.ok"));
+	}
 	
 	public Bolsa getBolsa() {
 		return bolsa;
 	}
 	
-	
-	
 	public String getDni() {
 		return dni;
 	}
-	
-	
 	
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	
-	
-	
 	public Persona getPersonaBusqueda() {
 		return personaBusqueda;
 	}
-	
-	
 	
 	public Seleccion getSeleccion() {
 		return seleccion;
 	}
 	
-	
-	
 	public void setSeleccion(Seleccion seleccion) {
 		this.seleccion = seleccion;
 	}
 	
-	
-	
 	public List<Merito> getMeritos() {
 		return meritos;
 	}
-	
 	
 	public List<MotiuExclusio> getListaMotivosExclusion() {
 		return listaMotivosExclusion;
 	}
 	
 	
-	
-	
+	public Integer getTotal() {
+		Integer total = 0;
+		if (meritos != null) {
+			for (Merito merito : meritos) {
+				if (merito != null && merito.getTotal() != null) {
+					total += merito.getTotal();
+				}
+			}
+		}
+		return total;
+	}
 	
 }

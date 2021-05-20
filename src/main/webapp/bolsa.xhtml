@@ -6,7 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<ui:define name="content">
 
@@ -14,14 +15,16 @@
 	<h:outputText value="#{msg['bolsa.titulo']}" style="font-size:20px;font-variant:small-caps;padding-left:50px;" rendered="#{sessionBean.admin}" />
 	<br/><br/>
 
-	<h:form id="mainForm" rendered="#{sessionBean.admin}">
+	<p:outputLabel value="#{msg['bolsas.msg.sin.categorias']}" rendered="#{!bolsaBean.hayCategorias}"/>
+
+	<h:form id="mainForm" rendered="#{sessionBean.admin and bolsaBean.hayCategorias}">
 
 		<!-- FORMULARI BORSA -->
 		<div style="padding:15px;">
 			<p:panelGrid columns="3" >
 				<p:outputLabel value="#{msg['bolsas.descripcion']}" />
 				<p:inputText id="inpDesc" value="#{bolsaBean.bolsa.descripcio}" 
-					required="true" requiredMessage="#{msg['bolsas.descripcion.obligatoria']}" />
+					required="true" requiredMessage="#{msg['bolsas.descripcion.obligatoria']}" maxlength="50" />
 				<p:message for="inpDesc"/>
 				
 				<p:outputLabel value="#{msg['bolsas.fecha.publicacion']}" />
@@ -36,11 +39,17 @@
 					required="true" requiredMessage="#{msg['bolsas.fecha.inicio.obligatoria']}" />
 				<p:message for="calInici" />
 				
+				<p:outputLabel for="@next" value="#{msg['bolsas.fase']}" />
+	            <p:selectOneMenu id="selFase" value="#{bolsaBean.bolsa.fase}"  >
+	               	<f:selectItems value="#{bolsaBean.fasesBorsa}" var="varFase" itemValue="#{varFase}" itemLabel="#{msg[varFase.message]}"  />
+	            </p:selectOneMenu>
+	            <p:message for="selCategoria" />
+				
 				<p:outputLabel for="@next" value="#{msg['bolsas.categoria']}" />
-	              	<p:selectOneMenu id="selCategoria" value="#{bolsaBean.bolsa.categoria}" converter="#{categoriaConverter}" >
-	                  	<f:selectItems value="#{bolsaBean.categorias}" var="varCategoria" itemValue="#{varCategoria}" itemLabel="#{varCategoria.descripcion}"  />
-	               </p:selectOneMenu>
-	               <p:message for="selCategoria" />
+	            <p:selectOneMenu id="selCategoria" value="#{bolsaBean.bolsa.categoria}" converter="#{categoriaConverter}" >
+	               	<f:selectItems value="#{bolsaBean.categorias}" var="varCategoria" itemValue="#{varCategoria}" itemLabel="#{varCategoria.descripcion}"  />
+	            </p:selectOneMenu>
+	            <p:message for="selCategoria" />
 		
 			</p:panelGrid>
 		</div>
@@ -54,7 +63,7 @@
               	  <p:commandButton value="#{msg['bolsas.criterio.anyadir']}" icon="pi pi-plus" action="#{bolsaBean.onAddNew}"
                                   process="@this" 
                                  styleClass="ui-button-success" style="margin-right: .5rem"
-                                  oncomplete="PF('dtCriteris').addRow();" />
+                                  update=":mainForm:dtCriteris :frmHeader:messages"/>
 	            </p:toolbarGroup>
     	    </p:toolbar>
 		</div>
@@ -64,24 +73,24 @@
 		 	editable="true" style="padding:15px;" emptyMessage="#{msg['bolsas.criterio.vacia']}">
             <f:facet name="header">#{msg['bolsas.criterio.criterios']}</f:facet>
 
-            <p:ajax event="rowEdit" listener="#{bolsaBean.onRowEdit}" update=":frmHeader:messages"/>
-            <p:ajax event="rowEditCancel" listener="#{bolsaBean.onRowCancel}" update=":frmHeader:messages"/>
-
-            <p:column headerText="#{msg['bolsas.criterio.descripcion']}">
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{criterio.descripcio}"/></f:facet>
-                    <f:facet name="input"><p:inputText id="modelInput" value="#{criterio.descripcio}" style="width:100%"/></f:facet>
-                </p:cellEditor>
-            </p:column>
-
             <p:column headerText="#{msg['bolsas.criterio.tipo']}">
                 <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{criterio.tipo.descripcion}"/></f:facet>
+                    <f:facet name="output"><h:outputText value="#{msg[criterio.tipo.message]}"/></f:facet>
                     <f:facet name="input">
                     	<h:selectOneMenu value="#{criterio.tipo}" style="width:100%">
                         	<f:selectItems value="#{bolsaBean.tipoCriterioList}" var="tipo"
-                                           itemLabel="#{tipo.descripcion}" itemValue="#{tipo}"/>
+                                           itemLabel="#{msg[tipo.message]}" itemValue="#{tipo}"/>
                         </h:selectOneMenu>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            
+            <p:column headerText="#{msg['bolsas.criterio.descripcion']}">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{criterio.descripcio}"/></f:facet>
+                    <f:facet name="input">
+                    	<p:inputText id="modelInput" value="#{criterio.descripcio}" style="width:100%" required="true" 
+                    		maxlength="50" />
                     </f:facet>
                 </p:cellEditor>
             </p:column>
@@ -89,14 +98,14 @@
             <p:column headerText="#{msg['bolsas.criterio.punts']}">
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{criterio.puntosPorUnidad}"/></f:facet>
-                    <f:facet name="input"><p:inputText value="#{criterio.puntosPorUnidad}" style="width:100%" /></f:facet>
+                    <f:facet name="input"><p:inputNumber value="#{criterio.puntosPorUnidad}" style="width:100%" required="true" decimalPlaces="0"/></f:facet>
                 </p:cellEditor>
             </p:column>
 
             <p:column headerText="#{msg['bolsas.criterio.maxima']}">
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{criterio.puntuacionMaxima}"/></f:facet>
-                    <f:facet name="input"><p:inputText value="#{criterio.puntuacionMaxima}" style="width:100%" /></f:facet>
+                    <f:facet name="input"><p:inputNumber value="#{criterio.puntuacionMaxima}" style="width:100%" required="true" decimalPlaces="0"/></f:facet>
                 </p:cellEditor>
             </p:column>
 
@@ -105,8 +114,10 @@
             </p:column>
             
             <p:column>
-            	<p:commandButton value="eliminar" actionListener="#{bolsaBean.removeCriterio(criterio)}" update="dtCriteris"/>
+            	<p:commandButton value="eliminar" actionListener="#{bolsaBean.removeCriterio(criterio)}" update="dtCriteris :frmHeader:messages"/>
             </p:column>
+            
+            <f:facet name="footer">Total: #{fn:length(bolsaBean.bolsa.criterios)} criteris</f:facet>
             
      	</p:dataTable>
 		
@@ -116,12 +127,12 @@
 		<div style="padding-left:5px;padding-right:5px">
 			<p:toolbar>
             	<p:toolbarGroup>
-              	  <p:commandButton value="#{msg['guardar']}" icon="pi pi-plus" 
+              	  <p:commandButton value="#{msg['bolsas.guardar']}" icon="pi pi-plus" 
               	  	actionListener="#{bolsaBean.saveBolsa}" action="index"
                                   process="@this" 
                                  styleClass="ui-button-success" style="margin-right: .5rem"
-                                  oncomplete="PF('dtCriteris').addRow();" update="panelPrueba" ajax="false">
-	              	  </p:commandButton>
+                                  update="panelPrueba" ajax="false" id="btnForm" />
+					<p:defaultCommand target="btnForm" />	              	 
 	            </p:toolbarGroup>
     	    </p:toolbar>
 		</div>

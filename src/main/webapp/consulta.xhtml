@@ -41,7 +41,7 @@
 				<p:inputText id="inpTelf" value="#{consultaBean.persona.telefon}" maxlength="9" disabled="true" />
 	
 	            <p:outputLabel for="@next" value="#{msg['candidatos.Idioma']}"/>
-	            <p:inputText id="inpIdioma" value="#{consultaBean.persona.idioma.descripcion}" maxlength="9" disabled="true" />
+	            <p:inputText id="inpIdioma" value="#{msg[consultaBean.persona.idioma.message]}" maxlength="9" disabled="true" />
 			</p:panelGrid>
 		</div>
 		

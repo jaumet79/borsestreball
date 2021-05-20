@@ -23,7 +23,7 @@
 				<p:outputLabel value="#{msg['usuarios.nombre']}"/>
 				<p:inputText id="inpUsuNom"	value="#{usuarioBean.usuario.usuari}" 
 					required="true" requiredMessage="#{msg['usuarios.nombre.obligatorio']}" maxlength="30" 
-					disabled="#{usuarioBean.usuario.usuari != null}"/>
+					disabled="#{usuarioBean.modoEdicion}"/>
 				<p:message for="inpUsuNom"/>
 				
 				<p:outputLabel value="#{msg['usuarios.password']}" rendered="#{!usuarioBean.modoEdicion}" />
@@ -31,25 +31,29 @@
 					required="true" requiredMessage="#{msg['usuarios.password.obligatoria']}" maxlength="30" rendered="#{!usuarioBean.modoEdicion}"  />
 				<p:message for="inpUsuCon" rendered="#{!usuarioBean.modoEdicion}" />
 				
+				<p:outputLabel value="#{msg['usuarios.activo']}" rendered="#{usuarioBean.modoEdicion}" />
+				<p:selectBooleanCheckbox value="#{usuarioBean.usuario.activo}" rendered="#{usuarioBean.modoEdicion}" />
+				<h:outputText value="" rendered="#{usuarioBean.modoEdicion}" />
+				
 				<p:outputLabel for="@next" value="#{msg['usuarios.rol']}" rendered="#{!usuarioBean.usuarioConsultor}" />
               	<p:selectOneMenu id="selRol" value="#{usuarioBean.usuario.rol}" rendered="#{!usuarioBean.usuarioConsultor}" >
-                  	<f:selectItems value="#{usuarioBean.rols}" var="varRol" itemValue="#{varRol}" itemLabel="#{varRol.descripcion}"  />
+                  	<f:selectItems value="#{usuarioBean.rols}" var="varRol" itemValue="#{varRol}" itemLabel="#{msg[varRol.message]}"  />
                	</p:selectOneMenu>
 	            <p:message for="selRol" rendered="#{!usuarioBean.usuarioConsultor}" />
 	            
 				<p:outputLabel for="@next" value="#{msg['usuarios.rol']}" rendered="#{usuarioBean.modoEdicion and usuarioBean.usuarioConsultor}" />
-	            <p:inputText value="#{usuarioBean.usuario.rol.descripcion}"	maxlength="30" disabled="true" rendered="#{usuarioBean.modoEdicion and usuarioBean.usuarioConsultor}" />
+	            <p:inputText value="#{msg[usuarioBean.usuario.rol.message]}" maxlength="30" disabled="true" rendered="#{usuarioBean.modoEdicion and usuarioBean.usuarioConsultor}" />
 	            <p:outputLabel rendered="#{usuarioBean.modoEdicion and usuarioBean.usuarioConsultor}" />
 	            
 	            <p:outputLabel for="@next" value="#{msg['usuarios.idioma']}"/>
 	            <p:selectOneMenu id="selIdioma" value="#{usuarioBean.usuario.idiomaDefecte}" required="true" >
-	            	<f:selectItems value="#{usuarioBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{varIdioma.descripcion}"  />
+	            	<f:selectItems value="#{usuarioBean.idiomas}" var="varIdioma" itemValue="#{varIdioma}" itemLabel="#{msg[varIdioma.message]}"  />
 				</p:selectOneMenu>						
 				<p:message for="selIdioma"/>
 			
 				<p:commandButton action="usuaris" value="#{msg['limpieza']}" ajax="false" immediate="true"/>
-				<p:commandButton actionListener="#{usuarioBean.guardarUsuario}" value="#{msg['guardar']}" update="mainForm frmUsuaris :frmHeader:messages" />
-				<p:outputLabel value="" />
+				<p:commandButton actionListener="#{usuarioBean.guardarUsuario}" value="#{msg['guardar']}" update="mainForm frmUsuaris :frmHeader:messages" id="btnForm" />
+				<p:defaultCommand target="btnForm" />
 				
 			</p:panelGrid>
 		</div>
@@ -67,18 +71,17 @@
 				<h:outputText value="#{usuari.usuari}" />
 			</p:column>
 			
-			<!-- 
-			<p:column headerText="password">
-				<h:outputText value="#{usuari.password}" />
+			<p:column headerText="#{msg['usuarios.activo']}">
+				<h:outputText value="#{msg['si']}" rendered="#{usuari.activo}" />
+				<h:outputText value="#{msg['no']}" rendered="#{!usuari.activo}" />
 			</p:column>
-			 -->
 			
 			<p:column headerText="#{msg['usuarios.rol']}">
-				<h:outputText value="#{usuari.rol.descripcion}" />
+				<h:outputText value="#{msg[usuari.rol.message]}" />
 			</p:column>
 			
 			<p:column headerText="#{msg['usuarios.idioma']}">
-				<h:outputText value="#{usuari.idiomaDefecte.descripcion}" />
+				<h:outputText value="#{msg[usuari.idiomaDefecte.message]}" />
 			</p:column>
 			
 			<p:column>
@@ -87,12 +90,49 @@
 				</p:commandButton>
 			</p:column>
 			
+			<p:column>
+				<p:commandButton value="#{msg['usuarios.btn.cambio.pwd']}" icon="pi pi-plus" 
+                                 update=":frmDialog" oncomplete="PF('pwdDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                    <f:setPropertyActionListener value="#{usuari}" target="#{usuarioBean.usuarioPwd}" />
+                    <p:resetInput target=":frmDialog"/>
+	            </p:commandButton>
+			</p:column>
+			
 			<f:facet name="footer">#{msg['total']}: #{fn:length(usuarioBean.usuaris)} #{msg['usuarios.usuarios_m']}</f:facet>
         		
 		</p:dataTable>
 
 
 	</h:form>
+
+	<!-- CANVI CONTRASENYA -->
+	<p:dialog header="#{msg['usuarios.cambio.pwd']}" showEffect="fade" modal="true" widgetVar="pwdDialog" appendTo="@(body)">
+		<h:form id="frmDialog">
+                  
+            <p:outputPanel class="ui-fluid">
+            
+            	<p:panelGrid columns="3" >
+						<p:outputLabel value="#{msg['usuarios.password']}"/>
+						<p:password id="inpNewPwd" value="#{usuarioBean.newPwd}" 
+							required="true" requiredMessage="#{msg['usuarios.password.obligatoria']}" />
+						<p:message for="inpNewPwd"/>
+						
+						<p:outputLabel value="#{msg['usuarios.password.bis']}" />
+						<p:password id="inpNewPwdRep" value="#{usuarioBean.newPwdRep}" 
+							required="true" requiredMessage="#{msg['usuarios.password.obligatoria']}" />
+						<p:message for="inpNewPwdRep"/>
+						
+						<p:outputLabel  />
+						<p:commandButton action="#{usuarioBean.cambiarContrasenya}" value="#{msg['usuarios.btn.cambio.pwd']}" 
+							update=":frmDialog :frmHeader:messages"  />
+						<p:outputLabel value="" />
+				</p:panelGrid>
+            
+			</p:outputPanel>
+		</h:form>
+	</p:dialog>
+	
 
 	</ui:define>
 

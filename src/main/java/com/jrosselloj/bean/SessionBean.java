@@ -25,7 +25,7 @@ import com.jrosselloj.service.IUsuarioService;
 @Component
 //@Scope("session")
 @SessionScope
-public class SessionBean {
+public class SessionBean extends BaseBean {
 	
 	private List<IdiomaEnum> idiomas = new ArrayList<>(Arrays.asList(IdiomaEnum.values()));
 	
@@ -75,7 +75,7 @@ public class SessionBean {
 			
 			RolEnum rolEnum = RolEnum.valueOf(gAuthority.getAuthority());
 			
-			roles += rolEnum.getDescripcion();
+			roles += getMessage(rolEnum.getMessage());
 			
 		}
 		

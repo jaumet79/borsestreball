@@ -41,11 +41,22 @@ public class CategoriaBean extends BaseBean {
 	}
 	
 	public void guardarCategoria() {
-		categoriaService.registrar(categoria);
-		categoria = new Categoria();
-		cargaCategorias();
+		try {
+			categoriaService.registrar(categoria);
+			
+			categoria = new Categoria();
+			cargaCategorias();
+			
+			showInfo(getMessage("categoria.msg.guardar.ok"));
+			
+		} catch (DataIntegrityViolationException e) {
+			showError(getMessage("categoria.msg.duplicado"));
+			
+		} catch (Exception e) {
+			showError(getMessage("categoria.msg.guardar.ko"));
+		}
 		
-		showInfo("Categoria guardada correctament", null);
+		
 	}
 	
 	public void cargarModificacionCategoria() {
@@ -59,13 +70,16 @@ public class CategoriaBean extends BaseBean {
 	public void eliminarCategoria() {
 		try {
 			categoriaService.eliminar(categoria);
-			categoria = new Categoria();
+			
 			cargaCategorias();
 			
-			showInfo("Categoria eliminada correctament", null);
+			showInfo(getMessage("categoria.msg.eliminar.ok"));
 			
 		} catch (DataIntegrityViolationException e) {
-			showError("No s'ha pogut eliminar degut a que hi ha alguna borsa amb aquesta categoria", null);
+			showError(getMessage("categoria.msg.eliminar.ko"));
+			
+		} finally {
+			categoria = new Categoria();
 			
 		}
 		

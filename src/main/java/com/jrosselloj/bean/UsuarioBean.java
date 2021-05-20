@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,11 @@ public class UsuarioBean extends BaseBean {
 	
 	private boolean modoEdicion = false;
 	
+	// canvi contrasenya
+	private Usuario usuarioPwd;
+	private String newPwd;
+	private String newPwdRep;
+	
 	@PostConstruct
 	public void init() {
 		carregaUsuaris();
@@ -49,12 +55,41 @@ public class UsuarioBean extends BaseBean {
 	}
 	
 	public void guardarUsuario() {
-		usuarioService.registrar(usuario);
+		
+		if (!modoEdicion) {
+			Usuario usuarioComprobacion = usuarioService.findById(usuario.getUsuari());
+			if (usuarioComprobacion != null) {
+				showError(getMessage("usuarios.msg.usuario.existe"));
+				return;
+			}
+		}
+		
+		usuarioService.registrar(usuario, !modoEdicion);
 		usuario = new Usuario();
 		carregaUsuaris();
 		modoEdicion = false;
 		
-		showInfo("Usuari guardat correctament", null);
+		showInfo(getMessage("usuarios.msg.guardar.ok"));
+	}
+	
+	public void cambiarContrasenya() {
+		
+		if (newPwd.equals(newPwdRep)) {
+			usuarioService.cambiarContrasenya(usuarioPwd.getUsuari(), newPwd);
+			showInfo(getMessage("usuarios.msg.cambio.pwd.ok"));
+			
+			usuarioPwd = null;
+			newPwd = null;
+			newPwdRep = null;
+			
+			PrimeFaces.current().executeScript("PF('pwdDialog').hide()");
+			
+		} else {
+			showError(getMessage("usuarios.msg.cambio.pwd.ko"));
+			
+		}
+		
+		
 	}
 	
 	public void cargarModificacionUsuario() {
@@ -80,6 +115,32 @@ public class UsuarioBean extends BaseBean {
 	
 	public boolean isUsuarioConsultor() {
 		return usuario != null && RolEnum.CONSULTOR.equals(usuario.getRol());
+	}
+	
+	public Usuario getUsuarioPwd() {
+		return usuarioPwd;
+	}
+	
+	public void setUsuarioPwd(Usuario usuarioPwd) {
+		this.usuarioPwd = usuarioPwd;
+	}
+	
+	public String getNewPwd() {
+		return newPwd;
+	}
+	
+	public void setNewPwd(String newPwd) {
+		this.newPwd = newPwd;
+	}
+	
+	
+	public String getNewPwdRep() {
+		return newPwdRep;
+	}
+	
+	
+	public void setNewPwdRep(String newPwdRep) {
+		this.newPwdRep = newPwdRep;
 	}
 	
 }

@@ -34,7 +34,7 @@ public class PersonaServiceImpl implements IPersonaService {
 		usuario.setRol(RolEnum.CONSULTOR);
 		usuario.setIdiomaDefecte(persona.getIdioma());
 		usuario.setPersona(persona);
-		usuarioService.registrar(usuario);
+		usuarioService.registrar(usuario, true);
 		
 	}
 	

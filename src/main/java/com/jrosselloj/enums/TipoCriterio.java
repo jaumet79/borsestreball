@@ -2,17 +2,17 @@ package com.jrosselloj.enums;
 
 public enum TipoCriterio {
 	
-	REQUISIT("Requisit"),
-	MERIT("Merit");
+	REQUISIT("tipo.criterio.requisito"),
+	MERIT("tipo.criterio.merito");
 	
-	private String descripcion;
+	private String message;
 	
-	private TipoCriterio(String descripcion) {
-		this.descripcion = descripcion;
+	private TipoCriterio(String message) {
+		this.message = message;
 	}
 	
-	public String getDescripcion() {
-		return descripcion;
+	public String getMessage() {
+		return message;
 	}
 	
 	

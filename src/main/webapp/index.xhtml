@@ -30,7 +30,7 @@
 	
 		<div id="mainContainer" >
 		
-			<h:form rendered="#{sessionBean.editor}">
+			<h:form id="frmBolsas" rendered="#{sessionBean.editor}">
 			
 				<p:dataTable var="bolsa" value="#{bolsaBean.bolsas}" style="padding:15px;">
 				
@@ -56,10 +56,27 @@
 						</h:outputText>
 					</p:column>
 					
+					<p:column headerText="#{msg['bolsas.fase']}">
+						<h:outputText value="#{msg[bolsa.fase.message]}" />
+					</p:column>
+					
 					<p:column rendered="#{sessionBean.admin}"> 
  						<p:commandButton action="bolsa" value="#{msg['bolsas.editar']}" ajax="false" >
  							<f:param name="bolsaId" value="#{bolsa.id}" />
  						</p:commandButton>
+ 					</p:column>
+
+					<!-- BOTÓ ELIMINAR -->
+					<p:column rendered="#{sessionBean.admin}"> 
+ 						<p:commandButton action="#{bolsaBean.eliminarBolsa(bolsa.id)}" value="#{msg['bolsas.eliminar']}" 
+ 							update=":frmBolsas :frmHeader:messages" >
+							<p:confirm header="#{msg['eliminar']}" message="#{msg['bolsas.eliminar.confirm']}" icon="pi pi-info-circle" />
+						</p:commandButton>
+ 							
+ 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+           					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+           					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+       					</p:confirmDialog>
  					</p:column>
  						
  					<p:column rendered="#{sessionBean.editor}"> 

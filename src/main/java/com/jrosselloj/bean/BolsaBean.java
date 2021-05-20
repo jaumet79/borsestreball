@@ -1,16 +1,18 @@
 package com.jrosselloj.bean;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.jrosselloj.enums.FaseBorsa;
 import com.jrosselloj.enums.TipoCriterio;
+import com.jrosselloj.exceptions.BorsesTreballException;
 import com.jrosselloj.model.Bolsa;
 import com.jrosselloj.model.Categoria;
 import com.jrosselloj.model.Criterio;
@@ -32,10 +34,10 @@ public class BolsaBean extends BaseBean {
 	private Bolsa bolsa = new Bolsa();
 	
 	private List<Categoria> categorias;
+	private List<FaseBorsa> fasesBorsa = Arrays.asList(FaseBorsa.values());
 	
 	@PostConstruct
 	public void init() {
-		
 		categorias = categoriaService.findAll();
 		
 		String bolsaId = getParametro("bolsaId");
@@ -52,6 +54,18 @@ public class BolsaBean extends BaseBean {
 	}
 	
 	public void onAddNew() {
+		
+		for (Criterio crit : bolsa.getCriterios()) {
+			if (crit.getDescripcio() == null
+					|| crit.getTipo() == null
+					|| crit.getPuntosPorUnidad() == null
+					|| crit.getPuntuacionMaxima() == null) {
+				showError("No es poden afegir nous criteris degut a que hi ha criteris incorrectes");
+				return;
+			}
+			
+		}
+		
 		Criterio c = new Criterio();
 		c.setBolsa(bolsa);
 		bolsa.getCriterios().add(c);
@@ -61,33 +75,56 @@ public class BolsaBean extends BaseBean {
 		return TipoCriterio.values();
 	}
 	
-	public void onRowEdit(RowEditEvent<Criterio> event) {
-		showInfo("S'ha editat el criteri", String.valueOf(event.getObject().getDescripcio()));
-	}
-	
-	public void onRowCancel(RowEditEvent<Criterio> event) {
-		showInfo("S'ha cancel·lat l'edició del criteri", String.valueOf(event.getObject().getId()));
-	}
-	
 	public void removeCriterio(Criterio criterio) {
-		bolsa.getCriterios().remove(criterio);
 		
-		if (bolsa.getCriterios().size() == 0) {
-			bolsa.getCriterios().clear();
+		if (bolsaService.existeMeritConEsteCriterio(criterio)) {
+			showError(getMessage("bolsas.msg.no.eliminar.crit"));
+			
+		} else {
+			
+			bolsa.getCriterios().remove(criterio);
+			
+			if (bolsa.getCriterios().size() == 0) {
+				bolsa.getCriterios().clear();
+			}
 		}
 	}
 	
-	// GET & SET -------------------------------
+	public void saveBolsa() {
+		try {
+			bolsaService.saveBolsa(bolsa, getUsuario());
+			showInfo(getMessage("bolsas.msg.guardar.ok"));
+			
+		} catch (BorsesTreballException e) {
+			showError(getMessage(e.getMessage()));
+			
+		} catch (Exception e) {
+			showError(getMessage("bolsas.msg.guardar.ko"));
+			
+		}
+		
+	}
+	
+	public void eliminarBolsa(Integer bolsaId) {
+		try {
+			bolsaService.eliminarBolsa(bolsaId);
+			loadAll();
+			
+			showInfo(getMessage("bolsas.msg.eliminar.ok"));
+			
+		} catch (BorsesTreballException e) {
+			showError(getMessage(e.getMessage()));
+			
+		} catch (Exception e) {
+			showError(getMessage("bolsas.msg.eliminar.except"));
+			
+		}
+	}
+	
 	
 	public List<Bolsa> getBolsas() {
 		return bolsas;
 	}
-	
-	public void saveBolsa() {
-		bolsaService.saveBolsa(bolsa, getUsuario());
-		
-	}
-	
 	
 	public Bolsa getBolsa() {
 		return bolsa;
@@ -103,8 +140,13 @@ public class BolsaBean extends BaseBean {
 		return categorias;
 	}
 	
+	public boolean isHayCategorias() {
+		return categorias != null && categorias.size() > 0;
+	}
 	
-	
+	public List<FaseBorsa> getFasesBorsa() {
+		return fasesBorsa;
+	}
 	
 	
 }
