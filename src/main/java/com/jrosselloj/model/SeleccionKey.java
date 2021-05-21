@@ -2,6 +2,11 @@ package com.jrosselloj.model;
 
 import java.io.Serializable;
 
+/**
+ * Clau primaria entitat selecció
+ * 
+ * @author Jaume
+ */
 public class SeleccionKey implements Serializable {
 	
 	private static final long serialVersionUID = 5106631491709187283L;
@@ -14,10 +19,6 @@ public class SeleccionKey implements Serializable {
 	public SeleccionKey() {
 		super();
 	}
-	
-	
-	
-	
 	
 	public SeleccionKey(Integer bolsaId, String personaDni) {
 		super();
@@ -42,10 +43,6 @@ public class SeleccionKey implements Serializable {
 		this.personaDni = personaDni;
 	}
 	
-	
-	
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,10 +51,6 @@ public class SeleccionKey implements Serializable {
 		result = prime * result + ((personaDni == null) ? 0 : personaDni.hashCode());
 		return result;
 	}
-	
-	
-	
-	
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -80,14 +73,5 @@ public class SeleccionKey implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

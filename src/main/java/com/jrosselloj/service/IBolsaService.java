@@ -10,6 +10,11 @@ import com.jrosselloj.model.Persona;
 import com.jrosselloj.model.Seleccion;
 import com.jrosselloj.model.Usuario;
 
+/**
+ * Clase de serveis de negoci de borses
+ * 
+ * @author Jaume
+ */
 public interface IBolsaService {
 	
 	void saveBolsa(Bolsa bolsa, Usuario usuarioCreador) throws BorsesTreballException;
@@ -25,8 +30,6 @@ public interface IBolsaService {
 	void deletePersonaFromBolsa(Seleccion seleccion);
 	
 	List<Merito> listaMeritosBySeleccion(Seleccion seleccion);
-	
-	//	void saveMeritosToSeleccion(List<Merito> meritos);
 	
 	void excluirDeSeleccion(Seleccion seleccion);
 	

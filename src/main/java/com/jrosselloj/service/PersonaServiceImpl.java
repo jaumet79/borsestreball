@@ -14,6 +14,11 @@ import com.jrosselloj.model.Seleccion;
 import com.jrosselloj.model.Usuario;
 import com.jrosselloj.repository.IPersonaRepo;
 
+/**
+ * Implementació de serveis de negoci de persones candidates
+ * 
+ * @author Jaume
+ */
 @Service
 public class PersonaServiceImpl implements IPersonaService {
 	

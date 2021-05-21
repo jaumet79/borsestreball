@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Enum tipus de rols
+ * 
+ * @author Jaume
+ */
 public enum RolEnum {
 	
 	ADMIN("rol.administrador"),

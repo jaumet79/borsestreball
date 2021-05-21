@@ -1,6 +1,11 @@
 package com.jrosselloj.enums;
 
 
+/**
+ * Enum estat de la selecció
+ * 
+ * @author Jaume
+ */
 public enum EstatSeleccio {
 	
 	ADMES("estado.admitido"),

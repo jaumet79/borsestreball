@@ -8,6 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 
+/**
+ * Entitat mèrit
+ * 
+ * @author Jaume
+ */
 @Entity
 @IdClass(MeritoKey.class)
 public class Merito {
@@ -40,7 +45,6 @@ public class Merito {
 	public Seleccion getSeleccion() {
 		return seleccion;
 	}
-	
 	
 	public void setSeleccion(Seleccion seleccion) {
 		this.seleccion = seleccion;

@@ -14,6 +14,11 @@ import com.jrosselloj.enums.IdiomaEnum;
 import com.jrosselloj.model.Persona;
 import com.jrosselloj.service.IPersonaService;
 
+/**
+ * Classe controladora de la vista de personas.xhtml
+ * 
+ * @author Jaume
+ */
 @Component
 @Scope("view")
 public class PersonaBean extends BaseBean {

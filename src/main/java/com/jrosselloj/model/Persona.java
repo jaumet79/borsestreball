@@ -17,6 +17,11 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import com.jrosselloj.enums.IdiomaEnum;
 
+/**
+ * Entitat persona
+ * 
+ * @author Jaume
+ */
 @Entity
 public class Persona {
 	

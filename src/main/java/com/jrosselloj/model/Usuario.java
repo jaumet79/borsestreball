@@ -14,6 +14,11 @@ import javax.persistence.OneToOne;
 import com.jrosselloj.enums.IdiomaEnum;
 import com.jrosselloj.enums.RolEnum;
 
+/**
+ * Entitat Usuari
+ * 
+ * @author Jaume
+ */
 @Entity
 public class Usuario {
 	

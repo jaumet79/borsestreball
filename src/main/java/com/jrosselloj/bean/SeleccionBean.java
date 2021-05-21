@@ -18,6 +18,11 @@ import com.jrosselloj.model.Seleccion;
 import com.jrosselloj.service.IBolsaService;
 import com.jrosselloj.service.IPersonaService;
 
+/**
+ * Classe controladora de la vista de seleccion.xhtml
+ * 
+ * @author Jaume
+ */
 @Component
 @Scope("view")
 public class SeleccionBean extends BaseBean {

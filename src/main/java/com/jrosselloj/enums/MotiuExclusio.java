@@ -1,6 +1,11 @@
 package com.jrosselloj.enums;
 
 
+/**
+ * Enum motius d'exclusió
+ * 
+ * @author Jaume
+ */
 public enum MotiuExclusio {
 	
 	DNI_CADUCAT("exclusion.dni.caducado"),

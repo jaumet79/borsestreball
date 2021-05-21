@@ -6,7 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<ui:define name="content">
 	
@@ -22,7 +23,7 @@
 	
 	<!-- TOOLBAR -->
 	<h:form id="frmSeleccion" rendered="#{seleccionBean.bolsa.fase == 'SOLICITUD'}">
-		<div >
+		<div style="padding-left:5px;padding-right:5px">
 			<p:toolbar>
             	<p:toolbarGroup>
               	  <p:commandButton value="#{msg['inscripcion.anyadir']}" icon="pi pi-plus" 
@@ -38,7 +39,7 @@
 	<!-- TAULA CANDIDATS -->
 	<h:form id="frmLista">
 	
-		<p:dataTable var="seleccion" value="#{seleccionBean.bolsa.listaSeleccion}" style="padding:15px;">
+		<p:dataTable id="tblSeleccion" var="seleccion" value="#{seleccionBean.bolsa.listaSeleccion}" style="padding:15px;">
 			
 			<f:facet name="header">#{msg['inscripcion.inscripciones']}</f:facet>
 			
@@ -70,28 +71,26 @@
 				<h:outputText value="#{msg[seleccion.motiuExclusio.message]}" />
 			</p:column>
 			
-			<p:column>
+			<p:column exportable="false" rendered="#{seleccionBean.bolsa.fase == 'MERITS'}">
 				<p:commandButton action="#{seleccionBean.cargarMeritosBySeleccion}" value="#{msg['inscripcion.meritos']}" update=":frmMeritos :frmTotal" 
-					oncomplete="PF('wvMerits').show()" rendered="#{seleccion.estat == 'ADMES' and (seleccionBean.bolsa.fase == 'MERITS')}">
+					oncomplete="PF('wvMerits').show()" rendered="#{seleccion.estat == 'ADMES'}" icon="pi pi-list">
 					<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
 				</p:commandButton>
 			</p:column>
 			
-			<p:column>
+			<p:column exportable="false" rendered="#{seleccionBean.bolsa.fase == 'SOLICITUD' or seleccionBean.bolsa.fase == 'ESMENA'}" >
+				<!-- BOTÓ EXCLOURE -->
 				<p:commandButton value="#{msg['inscripcion.excluir']}" update=":frmExclusion" oncomplete="PF('wvExclusion').show()"
-					rendered="#{seleccion.estat == 'ADMES' and (seleccionBean.bolsa.fase == 'SOLICITUD' or seleccionBean.bolsa.fase == 'ESMENA')}">
+					rendered="#{seleccion.estat == 'ADMES'}"
+					icon="pi pi-user-minus" >
 					<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
 				</p:commandButton>
 				
+				<!-- BOTÓ INCLOURE -->
 				<p:commandButton value="#{msg['inscripcion.incluir']}" update=":frmLista :frmHeader:messages" 
-					rendered="#{seleccion.estat == 'EXCLOS' and (seleccionBean.bolsa.fase == 'SOLICITUD' or seleccionBean.bolsa.fase == 'ESMENA')}" 
-					action="#{seleccionBean.incluirSeleccion}">
+					rendered="#{seleccion.estat == 'EXCLOS'}" 
+					action="#{seleccionBean.incluirSeleccion}" icon="pi pi-user-plus">
 					<p:confirm header="#{msg['inscripcion.incluir']}" message="#{msg['inscripcion.incluir.msg']}" icon="pi pi-info-circle" />
-					<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
-				</p:commandButton>
-				
-				<p:commandButton value="#{msg['eliminar']}" update=":frmLista :frmHeader:messages" action="#{seleccionBean.deletePersonaFromBolsa}" >
-					<p:confirm header="#{msg['inscripcion.eliminar']}" message="#{msg['inscripcion.eliminar.msg']}" icon="pi pi-info-circle" />
 					<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
 				</p:commandButton>
 				
@@ -100,8 +99,26 @@
            			<p:commandButton value="#{msg['si']}" type="button" styleClass="ui-confirmdialog-yes" />
        			</p:confirmDialog>
 			</p:column>
+		
+			<p:column exportable="false" rendered="#{seleccionBean.bolsa.fase == 'SOLICITUD' or seleccionBean.bolsa.fase == 'ESMENA'}" >
+				<!-- BOTÓ ELIMINAR -->
+				<p:commandButton value="#{msg['eliminar']}" update=":frmLista :frmHeader:messages"
+					action="#{seleccionBean.deletePersonaFromBolsa}" icon="pi pi-trash">
+					<p:confirm header="#{msg['inscripcion.eliminar']}" message="#{msg['inscripcion.eliminar.msg']}" icon="pi pi-info-circle" />
+					<f:setPropertyActionListener value="#{seleccion}" target="#{seleccionBean.seleccion}" />
+				</p:commandButton>
+				
+			</p:column>
+			
+			<f:facet name="footer">#{msg['total']}: #{fn:length(seleccionBean.bolsa.listaSeleccion)} #{msg['inscripcion.inscritos']}</f:facet>
 					
 		</p:dataTable>
+		
+		<p:commandButton value="generar PDF" styleClass="p-mr-2 p-mb-2" ajax="false" style="margin-left:15px;" icon="pi pi-file-pdf" >	
+        	<p:dataExporter type="pdf" target="tblSeleccion" fileName="inscripcions"/>
+		</p:commandButton>
+		
+		<br/><br/>
 		
 	</h:form>
 		
@@ -176,7 +193,7 @@
 					</p:cellEditor>
 				</p:column>
 				
-				<p:column headerText="Total" style="background:#79da7c;" >
+				<p:column headerText="#{msg['total']}" style="background:#79da7c;" >
 					<h:outputText value="#{merito.total}" />
 				</p:column>
 				
@@ -192,7 +209,7 @@
       
         <div style="float: left">
       		<p:commandButton value="#{msg['inscripcion.meritos.guardar']}" action="#{seleccionBean.guardarMeritosToSeleccion}" 
-      			oncomplete="PF('wvMerits').hide()" update=":frmLista :frmHeader:messages"/>
+      			oncomplete="PF('wvMerits').hide()" update=":frmLista :frmHeader:messages" icon="pi pi-save"/>
       	</div>
       
       	<div style="padding-left:175px;padding-top:5px;font-weight: bold;">

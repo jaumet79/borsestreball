@@ -16,6 +16,11 @@ import com.jrosselloj.enums.RolEnum;
 import com.jrosselloj.model.Usuario;
 import com.jrosselloj.service.IUsuarioService;
 
+/**
+ * Classe controladora de la vista de usuaris.xhtml
+ * 
+ * @author Jaume
+ */
 @Component
 @Scope("view")
 public class UsuarioBean extends BaseBean {

@@ -2,6 +2,11 @@ package com.jrosselloj.model;
 
 import java.io.Serializable;
 
+/**
+ * Clau primaria merit
+ * 
+ * @author Jaume
+ */
 public class MeritoKey implements Serializable {
 	
 	private static final long serialVersionUID = -6101951931919464871L;
@@ -23,31 +28,25 @@ public class MeritoKey implements Serializable {
 		this.criterioId = criterioId;
 	}
 	
-	
 	public Integer getBolsaId() {
 		return bolsaId;
 	}
-	
 	
 	public void setBolsaId(Integer bolsaId) {
 		this.bolsaId = bolsaId;
 	}
 	
-	
 	public String getPersonaDni() {
 		return personaDni;
 	}
-	
 	
 	public void setPersonaDni(String personaDni) {
 		this.personaDni = personaDni;
 	}
 	
-	
 	public Integer getCriterioId() {
 		return criterioId;
 	}
-	
 	
 	public void setCriterioId(Integer criterioId) {
 		this.criterioId = criterioId;
@@ -89,15 +88,6 @@ public class MeritoKey implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

@@ -9,6 +9,11 @@ import org.springframework.stereotype.Component;
 import com.jrosselloj.model.Persona;
 import com.jrosselloj.service.IPersonaService;
 
+/**
+ * Classe controladora de la vista de consulta.xhtml
+ * 
+ * @author Jaume
+ */
 @Component
 @Scope("view")
 public class ConsultaBean extends BaseBean {

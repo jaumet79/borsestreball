@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import com.jrosselloj.model.Categoria;
 import com.jrosselloj.repository.ICategoriaRepo;
 
+/**
+ * Implementació de serveis de negoci de categories
+ * 
+ * @author Jaume
+ */
 @Service
 public class CategoriaServiceImpl implements ICategoriaService {
 	

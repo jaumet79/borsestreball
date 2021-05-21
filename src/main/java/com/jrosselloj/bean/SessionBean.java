@@ -22,8 +22,12 @@ import com.jrosselloj.enums.RolEnum;
 import com.jrosselloj.model.Usuario;
 import com.jrosselloj.service.IUsuarioService;
 
+/**
+ * Classe de sessió. Aquí es guarda la informació relativa a la sessió de l'usuari
+ * 
+ * @author Jaume
+ */
 @Component
-//@Scope("session")
 @SessionScope
 public class SessionBean extends BaseBean {
 	

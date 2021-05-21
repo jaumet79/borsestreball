@@ -1,6 +1,11 @@
 package com.jrosselloj.enums;
 
 
+/**
+ * Fase de la borsa
+ * 
+ * @author Jaume
+ */
 public enum FaseBorsa {
 	
 	SOLICITUD("fase.solicitud"),

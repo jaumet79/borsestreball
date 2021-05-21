@@ -22,6 +22,11 @@ import com.jrosselloj.repository.IBolsaRepo;
 import com.jrosselloj.repository.IMeritoRepo;
 import com.jrosselloj.repository.ISeleccionRepo;
 
+/**
+ * Implementació serveis de negoci de borses
+ * 
+ * @author Jaume
+ */
 @Service
 public class BolsaServiceImpl implements IBolsaService {
 	

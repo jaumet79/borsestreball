@@ -7,8 +7,13 @@ import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.config.Scope;
 
+/**
+ * Classe auxiliar per a la configuració de beans i poder crear una vista per poder accedir del còdi xhtml
+ * 
+ * @author Jaume
+ */
 public class ViewScope implements Scope {
-
+	
 	@Override
 	public Object get(String name, ObjectFactory<?> objectFactory) {
 		Map<String, Object> viewMap = FacesContext.getCurrentInstance().getViewRoot().getViewMap();
@@ -17,29 +22,29 @@ public class ViewScope implements Scope {
 		} else {
 			Object object = objectFactory.getObject();
 			viewMap.put(name, object);
-
+			
 			return object;
 		}
 	}
-
+	
 	@Override
 	public String getConversationId() {
 		return null;
 	}
-
+	
 	@Override
 	public void registerDestructionCallback(String arg0, Runnable arg1) {
-
+		
 	}
-
+	
 	@Override
 	public Object remove(String name) {
 		return FacesContext.getCurrentInstance().getViewRoot().getViewMap().remove(name);
 	}
-
+	
 	@Override
 	public Object resolveContextualObject(String arg0) {
 		return null;
 	}
-
+	
 }

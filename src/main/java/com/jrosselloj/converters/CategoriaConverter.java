@@ -12,6 +12,11 @@ import com.jrosselloj.model.Categoria;
 import com.jrosselloj.service.ICategoriaService;
 
 
+/**
+ * Classe converter per a convertir valors de primefaces per guardar a hibernate
+ * 
+ * @author Jaume
+ */
 @FacesConverter("categoriaConverter")
 @Component("categoriaConverter")
 public class CategoriaConverter implements Converter {

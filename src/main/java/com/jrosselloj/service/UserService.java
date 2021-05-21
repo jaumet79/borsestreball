@@ -18,6 +18,11 @@ import com.jrosselloj.enums.IdiomaEnum;
 import com.jrosselloj.model.Usuario;
 import com.jrosselloj.repository.IUsuarioRepo;
 
+/**
+ * Servei auxiliar per a control d'accés d'usuaris de la pantalla login.xhtml
+ * 
+ * @author Jaume
+ */
 @Service
 public class UserService implements UserDetailsService {
 	

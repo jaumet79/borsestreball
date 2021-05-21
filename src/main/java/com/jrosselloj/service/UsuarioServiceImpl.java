@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 import com.jrosselloj.model.Usuario;
 import com.jrosselloj.repository.IUsuarioRepo;
 
+/**
+ * Implementació de serveis de negoci d'usuaris
+ * 
+ * @author Jaume
+ */
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
 	

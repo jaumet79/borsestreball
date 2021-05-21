@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.jrosselloj.model.Categoria;
 
+/**
+ * Clase de serveis de negoci de categories
+ * 
+ * @author Jaume
+ */
 public interface ICategoriaService {
 	
 	void registrar(Categoria categoria);

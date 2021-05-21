@@ -19,6 +19,11 @@ import com.jrosselloj.model.Criterio;
 import com.jrosselloj.service.IBolsaService;
 import com.jrosselloj.service.ICategoriaService;
 
+/**
+ * Classe controladora de la vista de bolsa.xhtml i index.xhtml
+ * 
+ * @author Jaume
+ */
 @Component
 @Scope("view")
 public class BolsaBean extends BaseBean {
@@ -60,7 +65,7 @@ public class BolsaBean extends BaseBean {
 					|| crit.getTipo() == null
 					|| crit.getPuntosPorUnidad() == null
 					|| crit.getPuntuacionMaxima() == null) {
-				showError("No es poden afegir nous criteris degut a que hi ha criteris incorrectes");
+				showError(getMessage("bolsas.msg.no.anyadir.criterios"));
 				return;
 			}
 			

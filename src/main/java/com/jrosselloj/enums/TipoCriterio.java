@@ -1,5 +1,10 @@
 package com.jrosselloj.enums;
 
+/**
+ * Enum tipus de criteri
+ * 
+ * @author Jaume
+ */
 public enum TipoCriterio {
 	
 	REQUISIT("tipo.criterio.requisito"),

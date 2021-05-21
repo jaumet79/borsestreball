@@ -12,6 +12,11 @@ import org.springframework.stereotype.Component;
 import com.jrosselloj.model.Categoria;
 import com.jrosselloj.service.ICategoriaService;
 
+/**
+ * Classe controladora de la vista de categorias.xhtml
+ * 
+ * @author Jaume
+ */
 @Component
 @Scope("view")
 public class CategoriaBean extends BaseBean {

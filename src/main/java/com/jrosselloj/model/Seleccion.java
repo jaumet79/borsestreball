@@ -13,6 +13,11 @@ import javax.persistence.Transient;
 import com.jrosselloj.enums.EstatSeleccio;
 import com.jrosselloj.enums.MotiuExclusio;
 
+/**
+ * Entitat selecció
+ * 
+ * @author Jaume
+ */
 @Entity
 @IdClass(SeleccionKey.class)
 public class Seleccion {
@@ -51,69 +56,53 @@ public class Seleccion {
 		return bolsaId;
 	}
 	
-	
-	
 	public void setBolsaId(Integer bolsaId) {
 		this.bolsaId = bolsaId;
 	}
-	
-	
 	
 	public String getPersonaDni() {
 		return personaDni;
 	}
 	
-	
-	
 	public void setPersonaDni(String personaDni) {
 		this.personaDni = personaDni;
 	}
-	
 	
 	public Bolsa getBolsa() {
 		return bolsa;
 	}
 	
-	
 	public void setBolsa(Bolsa bolsa) {
 		this.bolsa = bolsa;
 	}
-	
 	
 	public Persona getPersona() {
 		return persona;
 	}
 	
-	
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
-	
 	
 	public Integer getPuntuacionTotal() {
 		return puntuacionTotal;
 	}
 	
-	
 	public void setPuntuacionTotal(Integer puntuacionTotal) {
 		this.puntuacionTotal = puntuacionTotal;
 	}
-	
 	
 	public EstatSeleccio getEstat() {
 		return estat;
 	}
 	
-	
 	public void setEstat(EstatSeleccio estat) {
 		this.estat = estat;
 	}
 	
-	
 	public MotiuExclusio getMotiuExclusio() {
 		return motiuExclusio;
 	}
-	
 	
 	public void setMotiuExclusio(MotiuExclusio motiuExclusio) {
 		this.motiuExclusio = motiuExclusio;
@@ -127,15 +116,12 @@ public class Seleccion {
 		this.orden = orden;
 	}
 	
-	
 	public Integer getOrdenConsultaPersona() {
 		return ordenConsultaPersona;
 	}
 	
-	
 	public void setOrdenConsultaPersona(Integer ordenConsultaPersona) {
 		this.ordenConsultaPersona = ordenConsultaPersona;
 	}
-	
 	
 }

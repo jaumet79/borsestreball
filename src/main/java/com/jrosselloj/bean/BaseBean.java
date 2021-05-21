@@ -12,6 +12,11 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 import com.jrosselloj.model.Usuario;
 
+/**
+ * Clase comú per a tots els beans amb distintes utilitats
+ * 
+ * @author Jaume
+ */
 public class BaseBean {
 	
 	@Autowired

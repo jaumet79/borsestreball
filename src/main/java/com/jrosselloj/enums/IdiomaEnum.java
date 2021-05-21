@@ -2,6 +2,11 @@ package com.jrosselloj.enums;
 
 import java.util.Locale;
 
+/**
+ * Idiomes de l'aplicació
+ * 
+ * @author Jaume
+ */
 public enum IdiomaEnum {
 	
 	CATALA("idioma.catalan", new Locale("ca", "ES")), //ca-ES

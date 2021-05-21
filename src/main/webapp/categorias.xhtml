@@ -25,8 +25,8 @@
 					required="true" requiredMessage="#{msg['categoria.descripcion.obligatoria']}" maxlength="50" />
 				<p:message for="inpDocument"/>
 				
-				<p:commandButton action="categorias" value="#{msg['limpieza']}" ajax="false" immediate="true"/>
-				<p:commandButton actionListener="#{categoriaBean.guardarCategoria}" value="#{msg['guardar']}" update="mainForm frmCategorias :frmHeader:messages" id="btnForm" />
+				<p:commandButton action="categorias" value="#{msg['limpieza']}" ajax="false" immediate="true" icon="pi pi-undo"/>
+				<p:commandButton actionListener="#{categoriaBean.guardarCategoria}" value="#{msg['guardar']}" update="mainForm frmCategorias :frmHeader:messages" id="btnForm" icon="pi pi-save"/>
 				<p:defaultCommand target="btnForm" />
 			</p:panelGrid>
 		</div>
@@ -46,11 +46,11 @@
 			</p:column>
 			
 			<p:column>
-				<p:commandButton action="#{categoriaBean.cargarModificacionCategoria}" value="#{msg['editar']}" update=":mainForm :frmCategorias">
+				<p:commandButton action="#{categoriaBean.cargarModificacionCategoria}" value="#{msg['editar']}" update=":mainForm :frmCategorias" icon="pi pi-pencil" >
 					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoria}" />
 				</p:commandButton>
 				
-				<p:commandButton action="#{categoriaBean.eliminarCategoria}" value="Eliminar" update=":mainForm :frmCategorias :frmHeader:messages">
+				<p:commandButton action="#{categoriaBean.eliminarCategoria}" value="Eliminar" update=":mainForm :frmCategorias :frmHeader:messages" icon="pi pi-trash">
 					<p:confirm header="#{msg['eliminar']}" message="#{msg['categoria.eliminar']}" icon="pi pi-info-circle" />
 					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.categoria}" />
 				</p:commandButton>
@@ -61,7 +61,7 @@
        			</p:confirmDialog>
 			</p:column>
 			
-			<f:facet name="footer">Total: #{fn:length(categoriaBean.categorias)} categories</f:facet>
+			<f:facet name="footer">#{msg['total']}: #{fn:length(categoriaBean.categorias)} #{msg['categoria.categorias_m']}</f:facet>
 			
 		</p:dataTable>
 	</h:form>

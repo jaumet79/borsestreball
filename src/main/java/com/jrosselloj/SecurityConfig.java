@@ -12,6 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.jrosselloj.service.UserService;
 
+/**
+ * Classe configuració seguretat usuaris
+ * 
+ * @author Jaume
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -60,11 +65,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	
-	
-	
-	//	@Bean
-	//	public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-	//		return new MySimpleUrlAuthenticationSuccessHandler();
-	//	}
-	//	
 }

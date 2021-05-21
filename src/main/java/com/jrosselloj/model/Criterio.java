@@ -11,6 +11,11 @@ import javax.persistence.ManyToOne;
 
 import com.jrosselloj.enums.TipoCriterio;
 
+/**
+ * Entitat criteri
+ * 
+ * @author Jaume
+ */
 @Entity
 public class Criterio {
 	
@@ -34,42 +39,33 @@ public class Criterio {
 	@JoinColumn(name = "bolsa", referencedColumnName = "id", nullable = false)
 	private Bolsa bolsa;
 	
-	
-	
 	public Integer getId() {
 		return id;
 	}
-	
 	
 	public void setId(Integer id) {
 		this.id = id;
 	}
 	
-	
 	public String getDescripcio() {
 		return descripcio;
 	}
-	
 	
 	public void setDescripcio(String descripcio) {
 		this.descripcio = descripcio;
 	}
 	
-	
 	public TipoCriterio getTipo() {
 		return tipo;
 	}
-	
 	
 	public void setTipo(TipoCriterio tipo) {
 		this.tipo = tipo;
 	}
 	
-	
 	public Integer getPuntosPorUnidad() {
 		return puntosPorUnidad;
 	}
-	
 	
 	public void setPuntosPorUnidad(Integer puntosPorUnidad) {
 		this.puntosPorUnidad = puntosPorUnidad;
@@ -90,7 +86,6 @@ public class Criterio {
 	public void setPuntuacionMaxima(Integer puntuacionMaxima) {
 		this.puntuacionMaxima = puntuacionMaxima;
 	}
-	
 	
 	
 }

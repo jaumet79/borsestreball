@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.jrosselloj.model.Usuario;
 
+/**
+ * Clase de serveis de negoci d'usuaris
+ * 
+ * @author Jaume
+ */
 public interface IUsuarioService {
 	
 	void registrar(Usuario usuario, boolean encriptarPwd);

@@ -8,6 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * Entitat categoria
+ * 
+ * @author Jaume
+ */
 @Entity
 public class Categoria {
 	
@@ -75,9 +80,6 @@ public class Categoria {
 			return false;
 		return true;
 	}
-	
-	
-	
 	
 	
 }

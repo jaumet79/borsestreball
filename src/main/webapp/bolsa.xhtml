@@ -114,10 +114,10 @@
             </p:column>
             
             <p:column>
-            	<p:commandButton value="eliminar" actionListener="#{bolsaBean.removeCriterio(criterio)}" update="dtCriteris :frmHeader:messages"/>
+            	<p:commandButton value="#{msg['eliminar']}" actionListener="#{bolsaBean.removeCriterio(criterio)}" update="dtCriteris :frmHeader:messages" icon="pi pi-trash"/>
             </p:column>
             
-            <f:facet name="footer">Total: #{fn:length(bolsaBean.bolsa.criterios)} criteris</f:facet>
+            <f:facet name="footer">#{msg['total']}: #{fn:length(bolsaBean.bolsa.criterios)} #{msg['bolsas.criterios_m']}</f:facet>
             
      	</p:dataTable>
 		
@@ -127,7 +127,7 @@
 		<div style="padding-left:5px;padding-right:5px">
 			<p:toolbar>
             	<p:toolbarGroup>
-              	  <p:commandButton value="#{msg['bolsas.guardar']}" icon="pi pi-plus" 
+              	  <p:commandButton value="#{msg['bolsas.guardar']}" icon="pi pi-save" 
               	  	actionListener="#{bolsaBean.saveBolsa}" action="index"
                                   process="@this" 
                                  styleClass="ui-button-success" style="margin-right: .5rem"

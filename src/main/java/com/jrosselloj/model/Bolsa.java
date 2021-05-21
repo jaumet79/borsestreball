@@ -23,6 +23,11 @@ import org.hibernate.annotations.OrderBy;
 import com.jrosselloj.enums.EstatSeleccio;
 import com.jrosselloj.enums.FaseBorsa;
 
+/**
+ * Entitat borsa
+ * 
+ * @author Jaume
+ */
 @Entity
 public class Bolsa {
 	

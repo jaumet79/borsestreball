@@ -41,7 +41,7 @@
 				<p:message for="inpCognom2"/>
 				
 				<p:outputLabel value="#{msg['candidatos.fecha.nacimiento']}"/>
-				<p:calendar id="calNaixament" value="#{personaBean.persona.dataNaixament}" 
+				<p:calendar id="calNaixament" value="#{personaBean.persona.dataNaixament}" yearRange="c-100:c+0"
 					pattern="dd/MM/yyyy" mask="true" navigator="true" maxdate="today" popUpIconOnly="true" 
 					required="true" requiredMessage="#{msg['candidatos.fecha.nacimiento.obligatorio']}" />
 				<p:message for="calNaixament" />
@@ -56,10 +56,10 @@
 	            </p:selectOneMenu>						
 				<p:message for="selIdioma"/>
 			
-				<p:commandButton action="personas" value="#{msg['limpieza']}" ajax="false" immediate="true"/>
+				<p:commandButton action="personas" value="#{msg['limpieza']}" ajax="false" immediate="true" icon="pi pi-undo" />
 				<p:commandButton id="btnForm" actionListener="#{personaBean.guardarPersona}" value="#{msg['guardar']}" 
 					update=":mainForm :frmPersonas :frmHeader:messages"
-					oncomplete="PF('tblPersona').filter()"/>
+					oncomplete="PF('tblPersona').filter()" icon="pi pi-save"/>
 				<p:defaultCommand target="btnForm" />
 
 				
@@ -100,13 +100,13 @@
 			</p:column>
 			
 			<p:column>
-				<p:commandButton actionListener="#{personaBean.cargarModificacionPersona}" value="#{msg['editar']}" update="mainForm">
+				<p:commandButton actionListener="#{personaBean.cargarModificacionPersona}" value="#{msg['editar']}" update="mainForm" icon="pi pi-pencil" >
 					<f:setPropertyActionListener value="#{persona}" target="#{personaBean.persona}" />
 				</p:commandButton>
 			</p:column>
 			
 			<p:column>
-				<p:commandButton action="consulta" value="#{msg['candidatos.consultar']}" >
+				<p:commandButton action="consulta" value="#{msg['candidatos.consultar']}" icon="pi pi-id-card">
 					 <f:param name="personaId" value="#{persona.dni}" />
 				</p:commandButton>
 			</p:column>
